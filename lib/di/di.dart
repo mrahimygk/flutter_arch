@@ -7,4 +7,4 @@ final serviceLocator = GetIt.I;
 Future<void> loadDiModules() async {
 
   registerApiModule();
-}k
+}
