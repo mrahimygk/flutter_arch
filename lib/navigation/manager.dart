@@ -7,7 +7,7 @@ abstract class NavigationManager {
 
   NavigationManager(this.initialRoute);
 
-  Map<String, WidgetBuilder> initNavRoutes(BuildContext context);
+  Map<String, WidgetBuilder> initializeNavigationRoutes(BuildContext context);
 
   Future<Object?> pushNamed(
     BuildContext context,
@@ -35,7 +35,7 @@ class NavigationManagerImpl extends NavigationManager {
   NavigationManagerImpl(String initialRoute) : super(initialRoute);
 
   @override
-  Map<String, WidgetBuilder> initNavRoutes(BuildContext context) => {
+  Map<String, WidgetBuilder> initializeNavigationRoutes(BuildContext context) => {
         NavigationRoutes.PLANT_LIST: (context) => PlantListPage(),
       };
 
