@@ -36,8 +36,7 @@ class NavigationManagerImpl extends NavigationManager {
 
   @override
   Map<String, WidgetBuilder> initNavRoutes(BuildContext context) => {
-        //NavigationRoutes.SPLASH: (context) =>
-        NavigationRoutes.PLANT_LIST: (context) => PlantListPage()
+        NavigationRoutes.PLANT_LIST: (context) => PlantListPage(),
       };
 
   @override
