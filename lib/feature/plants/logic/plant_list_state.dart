@@ -19,6 +19,11 @@ class PlantListNoDataState extends PlantListState {
   List<Object?> get props => [];
 }
 
+class PlantListErrorState extends PlantListState {
+  @override
+  List<Object?> get props => [];
+}
+
 class PlantListDataReceivedState extends PlantListState {
   final List<Plant> plants;
 
