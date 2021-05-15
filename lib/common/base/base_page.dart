@@ -1,23 +1,23 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_architecture/common/base/screen_state.dart';
+import 'package:flutter_architecture/common/base/page_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 /// BaseScreen needs T,S,U
 /// T is the Cubit with generic type of ScreenState
 /// S is the ScreenState
 /// U is the argument type.
-abstract class BaseScreen<T extends Cubit<S>, S extends ScreenState, U>
+abstract class BasePage<T extends Cubit<S>, S extends PageState, U>
     extends StatelessWidget {
   final _scaffoldKey = GlobalKey<ScaffoldState>();
 
   U? args;
 
-  BaseScreen({Key? key}) : super(key: key);
+  BasePage({Key? key}) : super(key: key);
 
-  T blocOfScreen();
+  T getPageBloc();
 
-  Widget buildScreenWidget(BuildContext context);
+  Widget buildPageWidget(BuildContext context);
 
   @override
   Widget build(BuildContext context) {
@@ -26,13 +26,13 @@ abstract class BaseScreen<T extends Cubit<S>, S extends ScreenState, U>
     return MultiBlocListener(
       listeners: [
         BlocListener<T, S>(
-          bloc: blocOfScreen(),
+          bloc: getPageBloc(),
           listener: (context, state) {},
         ),
       ],
       child: Scaffold(
         key: _scaffoldKey,
-        body: buildScreenWidget(context),
+        body: buildPageWidget(context),
       ),
     );
   }
