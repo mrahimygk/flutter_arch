@@ -38,6 +38,8 @@ dependencies:
 
 
 dev_dependencies:
+  test: any #^1.17.4
+  mockito: ^5.0.7
   flutter_test:
     sdk: flutter
   build_runner: any #should be 2.0.3
