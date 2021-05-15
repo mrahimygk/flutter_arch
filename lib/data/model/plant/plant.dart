@@ -21,5 +21,5 @@ class Plant {
   );
 
   factory Plant.fromJson(Map<String, dynamic> json) => _$PlantFromJson(json);
-  Map<String, dynamic> toJson(Map<String, dynamic> json) => _$PlantToJson(this);
+  Map<String, dynamic> toJson() => _$PlantToJson(this);
 }
