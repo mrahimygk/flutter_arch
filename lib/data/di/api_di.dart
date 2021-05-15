@@ -1,6 +1,6 @@
 import 'package:flutter_architecture/data/dio/dio_interceptor.dart';
 import 'package:flutter_architecture/data/api/plants_api.dart';
-import 'package:flutter_architecture/di/di.dart';
+import 'package:flutter_architecture/di.dart';
 
 void registerApiModule() {
   serviceLocator.registerSingleton(DioInterceptor());
