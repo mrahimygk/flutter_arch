@@ -3,13 +3,13 @@ import 'package:flutter_architecture/domain/model/base/api_resource.dart';
 import 'package:flutter_architecture/domain/model/plant/plant.dart';
 import 'package:flutter_architecture/domain/repository/plants_repository.dart';
 
-abstract class GetPlantsUseCase extends BaseUseCase<void, List<Plant>> {
+abstract class GetPlantListUseCase extends BaseUseCase<void, List<Plant>> {
   final PlantsRepository _plantsRepository;
 
-  GetPlantsUseCase(this._plantsRepository);
+  GetPlantListUseCase(this._plantsRepository);
 }
 
-class GetPlantsUseCaseImpl extends GetPlantsUseCase {
+class GetPlantsUseCaseImpl extends GetPlantListUseCase {
   GetPlantsUseCaseImpl(PlantsRepository plantsRepository)
       : super(plantsRepository);
 
