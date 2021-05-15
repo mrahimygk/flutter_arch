@@ -35,7 +35,7 @@ dependencies:
   http: ^0.13.3
   retrofit: ^2.0.0-beta1
   logger: ^1.0.0
-
+  equatable: ^2.0.0
 
 dev_dependencies:
   test: any #^1.17.4
