@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_architecture/feature/base/screen_state.dart';
+import 'package:flutter_architecture/common/base/screen_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 /// BaseScreen needs T,S,U
