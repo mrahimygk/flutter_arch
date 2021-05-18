@@ -1,5 +1,5 @@
-import 'package:flutter_architecture/feature/plants/di.dart';
+import 'package:flutter_architecture/feature/posts/di.dart';
 
 void registerPageModules(){
-  registerPlantListPage();
+  registerPostListPage();
 }

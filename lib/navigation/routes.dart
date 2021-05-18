@@ -1,3 +1,3 @@
 class NavigationRoutes {
-  static const String PLANT_LIST = "/plant_list";
+  static const String POST_LIST = "/post_list";
 }

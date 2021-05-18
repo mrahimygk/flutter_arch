@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_architecture/feature/plants/view/plant_list_page.dart';
+import 'package:flutter_architecture/feature/posts/view/post_list_page.dart';
 import 'package:flutter_architecture/navigation/routes.dart';
 
 abstract class NavigationManager {
@@ -36,7 +36,7 @@ class NavigationManagerImpl extends NavigationManager {
 
   @override
   Map<String, WidgetBuilder> initializeNavigationRoutes(BuildContext context) => {
-        NavigationRoutes.PLANT_LIST: (context) => PlantListPage(),
+        NavigationRoutes.POST_LIST: (context) => PostListPage(),
       };
 
   @override

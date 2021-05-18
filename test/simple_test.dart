@@ -3,9 +3,9 @@ import 'dart:io';
 import 'package:mockito/mockito.dart';
 import 'package:test/test.dart';
 
-import 'package:flutter_architecture/data/api/plants_api.dart';
+import 'package:flutter_architecture/data/api/posts_api.dart';
 
-class MockHttpProvider extends Mock implements PlantsApi {}
+class MockHttpProvider extends Mock implements PostsApi {}
 
 void main() {
   test('add', () {
@@ -36,7 +36,7 @@ void main() {
   });
 
   test('net', () async {
-    MockHttpProvider().getPlants().then((value) =>
+    MockHttpProvider().getPosts().then((value) =>
         print("DONE")
     );
   });
