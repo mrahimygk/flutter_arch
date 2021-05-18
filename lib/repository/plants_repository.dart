@@ -22,9 +22,11 @@ class PlantsRepositoryImpl extends PlantsRepository {
   Stream<ApiResource<List<Plant>>> getPlants() async* {
     yield ApiResource(Status.LOADING, null);
 
-    final data = await _plantsApi
+    final ApiResource<List<Plant>> data = await _plantsApi
         .getPlants()
-        .then((PlantList value) => ApiResource(Status.SUCCESS, value.toDomain()));
+        .then((PlantList value) {
+          return ApiResource(Status.SUCCESS, value.toDomain());
+        });
 
     yield data;
   }
