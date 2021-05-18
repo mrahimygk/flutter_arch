@@ -19,7 +19,7 @@ class PlantListPage extends BasePage<PlantListCubit, PlantListState, void> {
       child: BlocBuilder(
         bloc: _cubit,
         buildWhen: (previousState, currentState) {
-          return true;
+          return previousState != currentState;
         },
         builder: (BuildContext context, PlantListState state) {
           if (state is PlantListInitialState) {
@@ -40,9 +40,9 @@ class PlantListPage extends BasePage<PlantListCubit, PlantListState, void> {
 
           if (state is PlantListDataReceivedState) {
             return _buildPlantListView(state.plants);
-          } else {
-            throw Exception("Please handle all states above");
           }
+
+          throw Exception("Please handle all states above");
         },
       ),
     );
