@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_architecture/common/base/base_page.dart';
+import 'package:flutter_architecture/common/widgets/api_error_widget.dart';
 import 'package:flutter_architecture/di.dart';
 import 'package:flutter_architecture/domain/model/plant/plant.dart';
 import 'package:flutter_architecture/feature/plants/logic/plant_list_cubit.dart';
@@ -35,17 +36,11 @@ class PlantListPage extends BasePage<PlantListCubit, PlantListState, void> {
             }
 
             if (state is PlantListErrorState) {
-              return Wrap(
-                children: [Column(
-                  children: [
-                    Icon(Icons.error),
-                    Text("Error"),
-                    Text(state.error),
-                    TextButton(onPressed: (){
-                      _cubit.getPlantList();
-                    }, child: Text("retry"))
-                  ],
-                )],
+              return Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: ApiErrorWidget(state.error, (){
+                  _cubit.getPlantList();
+                })
               );
             }
 
