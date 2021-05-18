@@ -20,8 +20,12 @@ class PlantListNoDataState extends PlantListState {
 }
 
 class PlantListErrorState extends PlantListState {
+  final String error;
+
+  PlantListErrorState(this.error);
+
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [error];
 }
 
 class PlantListDataReceivedState extends PlantListState {

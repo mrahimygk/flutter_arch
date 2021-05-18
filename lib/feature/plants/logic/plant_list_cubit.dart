@@ -28,10 +28,10 @@ class PlantListCubit extends PageCubit<PlantListState> {
           break;
 
         case Status.ERROR:
-          emit(PlantListErrorState());
+          emit(PlantListErrorState(event.message!));
       }
     }).onError((e, s) {
-      emit(PlantListErrorState());
+      emit(PlantListErrorState(e));
     });
   }
 }
