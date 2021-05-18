@@ -4,6 +4,7 @@ import 'package:flutter_architecture/data/model/plant/plant_list.dart';
 import 'package:flutter_architecture/domain/model/base/api_resource.dart';
 import 'package:flutter_architecture/domain/model/base/status.dart';
 import 'package:flutter_architecture/domain/model/plant/plant.dart';
+import 'package:dio/dio.dart';
 
 abstract class PlantsRepository {
   final PlantsApi _plantsApi;
@@ -26,7 +27,7 @@ class PlantsRepositoryImpl extends PlantsRepository {
         await _plantsApi.getPlants().then((PlantList value) {
       return ApiResource(Status.SUCCESS, value.toDomain(), null);
     }).onError((error, stackTrace) {
-      return ApiResource(Status.ERROR, null, error.toString());
+      return ApiResource(Status.ERROR, null, (error as DioError).message);
     });
 
     yield data;
