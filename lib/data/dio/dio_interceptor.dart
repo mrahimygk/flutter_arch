@@ -15,31 +15,36 @@ class DioInterceptor {
       _dio?.interceptors.add(
         InterceptorsWrapper(
           onRequest:
-              (RequestOptions options, RequestInterceptorHandler handler) =>
-                  requestInterceptor(options, handler),
-          onResponse: (Response response, ResponseInterceptorHandler handler) =>
-              responseInterceptor(response),
-          onError: (DioError error, ErrorInterceptorHandler handler) =>
-              errorInterceptor(error, _dio!),
+              (RequestOptions options, RequestInterceptorHandler handler) {
+                return requestInterceptor(options, handler);
+              },
+          onResponse: (Response response, ResponseInterceptorHandler handler) {
+            return responseInterceptor(response, handler);
+          },
+          onError: (DioError error, ErrorInterceptorHandler handler) {
+            return errorInterceptor(error, _dio!, handler);
+          },
         ),
       );
     }
     return _dio!;
   }
 
-  dynamic errorInterceptor(DioError error, Dio dio) async {
-    if (error.response?.statusCode == 401) {}
+  dynamic errorInterceptor(DioError error, Dio dio, ErrorInterceptorHandler handler) async {
+    if (error.response?.statusCode == 401) {
 
-    return error;
+    }
+
+    return handler.next(error);
   }
 
-  dynamic responseInterceptor(Response response) async {
+  dynamic responseInterceptor(Response response, ResponseInterceptorHandler handler) async {
     Logger().d("[Response] statusCode= ${response.statusCode},\n" +
         "statusMessage= ${response.statusMessage},\n" +
         "headers= ${response.headers},\n" +
         "body= ${response.data},\n");
 
-    return response;
+    return handler.next(response);
   }
 
   dynamic requestInterceptor(
@@ -52,6 +57,6 @@ class DioInterceptor {
         "method= ${options.method},\n "
         "queryParameters= ${options.queryParameters}");
 
-    return options;
+    return handler.next(options);
   }
 }
