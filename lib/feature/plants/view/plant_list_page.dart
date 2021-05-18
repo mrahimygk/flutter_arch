@@ -36,7 +36,18 @@ class PlantListPage extends BasePage<PlantListCubit, PlantListState, void> {
             }
 
             if (state is PlantListErrorState) {
-              return Text("Error, retry");
+              return Wrap(
+                children: [Column(
+                  children: [
+                    Icon(Icons.error),
+                    Text("Error"),
+                    Text(state.error),
+                    TextButton(onPressed: (){
+                      _cubit.getPlantList();
+                    }, child: Text("retry"))
+                  ],
+                )],
+              );
             }
 
             if (state is PlantListDataReceivedState) {
