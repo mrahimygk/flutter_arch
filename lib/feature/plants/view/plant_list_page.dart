@@ -14,36 +14,38 @@ class PlantListPage extends BasePage<PlantListCubit, PlantListState, void> {
   Widget buildPageWidget(BuildContext context) {
     _cubit.getPlantList();
 
-    return Container(
-      color: Colors.blueGrey,
-      child: BlocBuilder(
-        bloc: _cubit,
-        buildWhen: (previousState, currentState) {
-          return previousState != currentState;
-        },
-        builder: (BuildContext context, PlantListState state) {
-          if (state is PlantListInitialState) {
-            return Container(color: Colors.white);
-          }
+    return Center(
+      child: Container(
+        color: Colors.blueGrey,
+        child: BlocBuilder(
+          bloc: _cubit,
+          buildWhen: (previousState, currentState) {
+            return previousState != currentState;
+          },
+          builder: (BuildContext context, PlantListState state) {
+            if (state is PlantListInitialState) {
+              return Container(color: Colors.white);
+            }
 
-          if (state is PlantListLoadingState) {
-            return CircularProgressIndicator();
-          }
+            if (state is PlantListLoadingState) {
+              return CircularProgressIndicator();
+            }
 
-          if (state is PlantListNoDataState) {
-            return Text("No data, retry");
-          }
+            if (state is PlantListNoDataState) {
+              return Text("No data, retry");
+            }
 
-          if (state is PlantListErrorState) {
-            return Text("Error, retry");
-          }
+            if (state is PlantListErrorState) {
+              return Text("Error, retry");
+            }
 
-          if (state is PlantListDataReceivedState) {
-            return _buildPlantListView(state.plants);
-          }
+            if (state is PlantListDataReceivedState) {
+              return _buildPlantListView(state.plants);
+            }
 
-          throw Exception("Please handle all states above");
-        },
+            throw Exception("Please handle all states above");
+          },
+        ),
       ),
     );
   }
