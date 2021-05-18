@@ -16,7 +16,6 @@ class PlantListPage extends BasePage<PlantListCubit, PlantListState, void> {
 
     return Center(
       child: Container(
-        color: Colors.blueGrey,
         child: BlocBuilder(
           bloc: _cubit,
           buildWhen: (previousState, currentState) {
