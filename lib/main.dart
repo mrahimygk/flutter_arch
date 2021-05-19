@@ -9,7 +9,17 @@ void main() async {
   await EasyLocalization.ensureInitialized();
 
   await di.loadDiModules();
-  runApp(FlutterArchApp());
+  runApp(EasyLocalization(
+    supportedLocales: [
+      Locale('en'),
+      Locale('fr'),
+      Locale('ar'),
+      Locale('fa'),
+    ],
+    path: 'assets/translations',
+    fallbackLocale: Locale('en'),
+    child: FlutterArchApp(),
+  ));
 }
 
 class FlutterArchApp extends StatelessWidget {
@@ -19,6 +29,9 @@ class FlutterArchApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      localizationsDelegates: context.localizationDelegates,
+      supportedLocales: context.supportedLocales,
+      locale: context.locale,
       title: 'Flutter Architecture Demo',
       initialRoute: _navigationManager.initialRoute,
       routes: _navigationManager.initializeNavigationRoutes(context),
