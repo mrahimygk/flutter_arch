@@ -6,6 +6,7 @@ import 'package:flutter_architecture/di.dart';
 import 'package:flutter_architecture/domain/model/post/post.dart';
 import 'package:flutter_architecture/feature/posts/logic/post_list_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class PostListPage extends BasePage<PostListCubit, PostListState, void> {
   final PostListCubit _cubit = serviceLocator.get<PostListCubit>();
@@ -23,7 +24,7 @@ class PostListPage extends BasePage<PostListCubit, PostListState, void> {
       body: Column(
         mainAxisSize: MainAxisSize.max,
         children: [
-          Text("title"),
+          Text("appName".tr()),
           BlocBuilder(
             bloc: _cubit,
             buildWhen: (previousState, currentState) {
