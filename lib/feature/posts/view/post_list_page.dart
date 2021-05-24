@@ -18,7 +18,9 @@ class PostListPage extends BasePage<PostListCubit, PostListState, void> {
   @override
   Widget buildPageWidget(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: Text("appName".tr()),
+      ),
       drawer: AppDrawer(
         onLanguageChanged: (Locale? locale) {
           EasyLocalization.of(context)!.setLocale(locale!);
@@ -27,7 +29,6 @@ class PostListPage extends BasePage<PostListCubit, PostListState, void> {
       body: Column(
         mainAxisSize: MainAxisSize.max,
         children: [
-          Text("appName".tr()),
           BlocBuilder(
             bloc: _cubit,
             buildWhen: (previousState, currentState) {
