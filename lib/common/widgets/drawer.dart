@@ -1,18 +1,19 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_architecture/common/data/locales.dart';
 
 class AppDrawer extends StatefulWidget {
-
   final Function(Locale? locale)? onLanguageChanged;
 
   const AppDrawer({Key? key, this.onLanguageChanged}) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() => AppDrawerState(onLanguageChanged: onLanguageChanged);
+  State<StatefulWidget> createState() =>
+      AppDrawerState(onLanguageChanged: onLanguageChanged);
 }
 
 class AppDrawerState extends State<AppDrawer> {
-  Locale? currentLocale = Locale("en");
+  Locale? currentLocale;
 
   final Function(Locale? locale)? onLanguageChanged;
 
@@ -20,6 +21,7 @@ class AppDrawerState extends State<AppDrawer> {
 
   @override
   Widget build(BuildContext context) {
+    currentLocale = EasyLocalization.of(context)?.currentLocale;
     final items = AppDrawerItems.get();
     return Drawer(
       child: ListView.builder(
