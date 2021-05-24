@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_architecture/common/data/locales.dart';
 import 'package:flutter_architecture/navigation/manager.dart';
 
 import 'di.dart' as di;
@@ -10,12 +11,7 @@ void main() async {
 
   await di.loadDiModules();
   runApp(EasyLocalization(
-    supportedLocales: [
-      Locale('en'),
-      Locale('fr'),
-      Locale('ar'),
-      Locale('fa'),
-    ],
+    supportedLocales: locales,
     path: 'assets/translations',
     fallbackLocale: Locale('en'),
     child: FlutterArchApp(),
