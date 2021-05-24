@@ -1,5 +1,6 @@
 {
   "appName": "Flutter Arch",
   "login": "Login",
-  "language": "Language"
+  "language": "Language",
+  "darkMode": "Dark Mode"
 }

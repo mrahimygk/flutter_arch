@@ -15,6 +15,7 @@ class AppDrawer extends StatefulWidget {
 
 class AppDrawerState extends State<AppDrawer> {
   Locale? currentLocale;
+  bool isDarkMode = false;
 
   final Function(Locale? locale)? onLanguageChanged;
 
@@ -60,6 +61,20 @@ class AppDrawerState extends State<AppDrawer> {
             );
           }
 
+          if (item.type == AppDrawerItems.DARK_MODE) {
+            return ListTile(
+              title: Text(items[index].title.tr()),
+              trailing: Switch(
+                value: isDarkMode,
+                onChanged: (bool newValue){
+                  setState(() {
+                    isDarkMode = newValue;
+                  });
+                },
+              )
+            );
+          }
+
           return ListTile(title: Text(items[index].title.tr()));
         },
       ),
@@ -86,12 +101,14 @@ class AppDrawerItems {
   static const int HEADER = 0;
   static const int LOGIN = 1;
   static const int LANGUAGE = 2;
+  static const int DARK_MODE = 3;
 
   static List<IDrawerItem> get() {
     return [
       DrawerItem("HEADER", HEADER),
       SimpleDrawerItem("login", LOGIN),
-      DrawerItem("language", LANGUAGE)
+      DrawerItem("language", LANGUAGE),
+      DrawerItem("darkMode", DARK_MODE),
     ];
   }
 }
