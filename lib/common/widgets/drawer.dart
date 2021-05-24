@@ -39,7 +39,7 @@ class AppDrawerState extends State<AppDrawer> {
           }
           if (item.type == AppDrawerItems.LANGUAGE) {
             return ListTile(
-              leading: Text(items[index].title.tr()),
+              title: Text(items[index].title.tr()),
               trailing: DropdownButton<Locale>(
                 value: currentLocale,
                 onChanged: (Locale? newValue) {
