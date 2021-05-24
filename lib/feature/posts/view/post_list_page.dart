@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_architecture/common/base/base_page.dart';
 import 'package:flutter_architecture/common/widgets/api_error_widget.dart';
@@ -6,21 +7,23 @@ import 'package:flutter_architecture/di.dart';
 import 'package:flutter_architecture/domain/model/post/post.dart';
 import 'package:flutter_architecture/feature/posts/logic/post_list_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:easy_localization/easy_localization.dart';
 
 class PostListPage extends BasePage<PostListCubit, PostListState, void> {
   final PostListCubit _cubit = serviceLocator.get<PostListCubit>();
 
-  PostListPage({Key? key}) : super(key: key){
+  PostListPage({Key? key}) : super(key: key) {
     _cubit.getPostList();
   }
 
   @override
   Widget buildPageWidget(BuildContext context) {
-
     return Scaffold(
       appBar: AppBar(),
-      drawer: AppDrawer(),
+      drawer: AppDrawer(
+        onLanguageChanged: (Locale? locale) {
+          EasyLocalization.of(context)!.setLocale(locale!);
+        },
+      ),
       body: Column(
         mainAxisSize: MainAxisSize.max,
         children: [
@@ -36,7 +39,8 @@ class PostListPage extends BasePage<PostListCubit, PostListState, void> {
               }
 
               if (state is PostListLoadingState) {
-                return Expanded(child: Center(child: CircularProgressIndicator()));
+                return Expanded(
+                    child: Center(child: CircularProgressIndicator()));
               }
 
               if (state is PostListNoDataState) {
@@ -70,15 +74,15 @@ class PostListPage extends BasePage<PostListCubit, PostListState, void> {
     return ListView.builder(
         itemCount: posts.length,
         itemBuilder: (context, index) {
-          final item  =posts[index];
+          final item = posts[index];
           return Padding(
-            padding: const EdgeInsets.only(top:18.0),
+            padding: const EdgeInsets.only(top: 18.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.max,
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(left:8.0),
+                  padding: const EdgeInsets.only(left: 8.0),
                   child: Text("${item.id} :"),
                 ),
                 Container(
@@ -95,7 +99,11 @@ class PostListPage extends BasePage<PostListCubit, PostListState, void> {
                                 padding: const EdgeInsets.all(8.0),
                                 child: Icon(Icons.message),
                               ),
-                              Flexible(child: Text(item.title, style: TextStyle(fontWeight: FontWeight.bold),)),
+                              Flexible(
+                                  child: Text(
+                                item.title,
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              )),
                             ],
                           ),
                           Padding(
