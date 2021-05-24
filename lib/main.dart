@@ -11,7 +11,7 @@ void main() async {
 
   await di.loadDiModules();
   runApp(EasyLocalization(
-    supportedLocales: locales,
+    supportedLocales: appLocaleList.map((e) => e.locale).toList(),
     path: 'assets/translations',
     fallbackLocale: Locale('en'),
     child: FlutterArchApp(),
