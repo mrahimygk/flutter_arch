@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_architecture/common/data/locales.dart';
+import 'package:flutter_architecture/domain/model/locale/app_locale.dart';
 
 class AppDrawer extends StatefulWidget {
   final Function(Locale? locale)? onLanguageChanged;
@@ -38,7 +39,7 @@ class AppDrawerState extends State<AppDrawer> {
           }
           if (item.type == AppDrawerItems.LANGUAGE) {
             return ListTile(
-              leading: Text(items[index].title),
+              leading: Text(items[index].title.tr()),
               trailing: DropdownButton<Locale>(
                 value: currentLocale,
                 onChanged: (Locale? newValue) {
@@ -47,11 +48,11 @@ class AppDrawerState extends State<AppDrawer> {
                     onLanguageChanged?.call(newValue);
                   });
                 },
-                items: locales
+                items: appLocaleList
                     .map<DropdownMenuItem<Locale>>(
-                      (Locale e) => DropdownMenuItem(
-                        child: Text(e.languageCode),
-                        value: e,
+                      (AppLocale e) => DropdownMenuItem(
+                        child: Text(e.name),
+                        value: e.locale,
                       ),
                     )
                     .toList(),
@@ -59,7 +60,7 @@ class AppDrawerState extends State<AppDrawer> {
             );
           }
 
-          return ListTile(title: Text(items[index].title));
+          return ListTile(title: Text(items[index].title.tr()));
         },
       ),
     );
@@ -74,11 +75,11 @@ abstract class IDrawerItem {
 }
 
 class SimpleDrawerItem extends IDrawerItem {
-  SimpleDrawerItem(String name, int type) : super(name, type);
+  SimpleDrawerItem(String titleKey, int type) : super(titleKey, type);
 }
 
 class DrawerItem extends IDrawerItem {
-  DrawerItem(String name, int type) : super(name, type);
+  DrawerItem(String titleKey, int type) : super(titleKey, type);
 }
 
 class AppDrawerItems {
