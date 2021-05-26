@@ -10,5 +10,6 @@ extension ToDomain on data.Coin {
         hourlyVolume,
         dailyVolume,
         monthlyVolume,
+        null,
       );
 }
