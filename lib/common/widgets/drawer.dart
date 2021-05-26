@@ -23,6 +23,7 @@ class AppDrawerState extends State<AppDrawer> {
 
   @override
   Widget build(BuildContext context) {
+    isDarkMode = Theme.of(context).brightness == Brightness.dark;
     currentLocale = EasyLocalization.of(context)?.currentLocale;
     final items = AppDrawerItems.get();
     return Drawer(

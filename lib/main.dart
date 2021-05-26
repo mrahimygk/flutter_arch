@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_architecture/common/data/locales.dart';
+import 'package:flutter_architecture/common/styles/themes.dart';
 import 'package:flutter_architecture/navigation/manager.dart';
 
 import 'di.dart' as di;
@@ -31,9 +32,9 @@ class FlutterArchApp extends StatelessWidget {
       title: 'Flutter Architecture Demo',
       initialRoute: _navigationManager.initialRoute,
       routes: _navigationManager.initializeNavigationRoutes(context),
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
+      theme: lightTheme,
+      darkTheme: darkTheme,
+      themeMode: ThemeMode.system,
     );
   }
 }
