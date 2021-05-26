@@ -1,4 +1,4 @@
-import 'package:easy_localization/easy_localization.dart';
+import 'package:easy_localization/easy_localization.dart' as localization;
 import 'package:flutter/material.dart';
 import 'package:flutter_architecture/common/base/base_page.dart';
 import 'package:flutter_architecture/common/widgets/api_error_widget.dart';
@@ -17,13 +17,14 @@ class PostListPage extends BasePage<PostListCubit, PostListState, void> {
 
   @override
   Widget buildPageWidget(BuildContext context) {
+    final TextDirection direction = Directionality.of(context);
     return Scaffold(
       appBar: AppBar(
         title: Text("appName".tr()),
       ),
       drawer: AppDrawer(
         onLanguageChanged: (Locale? locale) {
-          EasyLocalization.of(context)!.setLocale(locale!);
+          localization.EasyLocalization.of(context)!.setLocale(locale!);
         },
       ),
       body: Column(
@@ -57,7 +58,8 @@ class PostListPage extends BasePage<PostListCubit, PostListState, void> {
               }
 
               if (state is PostListDataReceivedState) {
-                return Expanded(child: _buildPostListView(state.posts));
+                return Expanded(
+                    child: _buildPostListView(state.posts, direction));
               }
 
               throw Exception("Please handle all states above");
@@ -71,7 +73,7 @@ class PostListPage extends BasePage<PostListCubit, PostListState, void> {
   @override
   PostListCubit getPageBloc() => _cubit;
 
-  Widget _buildPostListView(List<Post> posts) {
+  Widget _buildPostListView(List<Post> posts, TextDirection direction) {
     return ListView.builder(
         itemCount: posts.length,
         itemBuilder: (context, index) {
@@ -91,25 +93,41 @@ class PostListPage extends BasePage<PostListCubit, PostListState, void> {
                   child: Card(
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                      child: Stack(
                         children: [
-                          Row(
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
+                              Row(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Icon(Icons.message),
+                                  ),
+                                  Flexible(
+                                      flex: 6,
+                                      child: Text(
+                                        item.title,
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold),
+                                      )),
+                                  Spacer(
+                                    flex: 1,
+                                  )
+                                ],
+                              ),
                               Padding(
                                 padding: const EdgeInsets.all(8.0),
-                                child: Icon(Icons.message),
+                                child: Text(item.body),
                               ),
-                              Flexible(
-                                  child: Text(
-                                item.title,
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                              )),
                             ],
                           ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(item.body),
+                          Align(
+                            alignment: direction == TextDirection.ltr
+                                ? Alignment.topRight
+                                : Alignment.topLeft,
+                            child: IconButton(
+                                icon: Icon(Icons.star), onPressed: () {}),
                           ),
                         ],
                       ),
