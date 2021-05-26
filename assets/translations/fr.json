@@ -2,5 +2,6 @@
   "appName": "l' architecture Flutter",
   "login": "connexion",
   "language": "Langue",
-  "darkMode": "Mode Nuit"
+  "darkMode": "Mode Nuit",
+  "coinList": "liste des pièces"
 }

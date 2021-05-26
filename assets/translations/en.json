@@ -2,5 +2,6 @@
   "appName": "Flutter Arch",
   "login": "Login",
   "language": "Language",
-  "darkMode": "Dark Mode"
+  "darkMode": "Dark Mode",
+  "coinList": "Coin List"
 }
