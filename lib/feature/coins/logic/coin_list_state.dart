@@ -38,4 +38,14 @@ class CoinListDataReceivedState extends CoinListState {
 
 }
 
+class CoinListDataFilledState extends CoinListState {
+  final List<Coin> coins;
+
+  CoinListDataFilledState(this.coins);
+
+  @override
+  List<Object?> get props => [coins];
+
+}
+
 //TODO: add navigate state to go to details
