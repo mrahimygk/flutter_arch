@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_architecture/feature/posts/view/post_list_page.dart';
+import 'package:flutter_architecture/feature/coins/view/coin_list_page.dart';
 import 'package:flutter_architecture/navigation/routes.dart';
 
 abstract class NavigationManager {
@@ -37,6 +38,7 @@ class NavigationManagerImpl extends NavigationManager {
   @override
   Map<String, WidgetBuilder> initializeNavigationRoutes(BuildContext context) => {
         NavigationRoutes.POST_LIST: (context) => PostListPage(),
+        NavigationRoutes.COIN_LIST: (context) => CoinListPage(),
       };
 
   @override
