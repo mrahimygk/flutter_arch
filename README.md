@@ -1,4 +1,4 @@
-# flutter_architecture
+# flutter architecture: MVI and Cubit
 
 A Flutter application that shows a good architecture with these libraries and features:
 
