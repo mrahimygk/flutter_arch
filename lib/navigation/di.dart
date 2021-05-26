@@ -4,6 +4,6 @@ import 'package:flutter_architecture/navigation/routes.dart';
 
 void registerNavigationModule() {
   serviceLocator.registerSingleton<NavigationManager>(
-    NavigationManagerImpl(NavigationRoutes.POST_LIST),
+    NavigationManagerImpl(NavigationRoutes.COIN_LIST),
   );
 }
