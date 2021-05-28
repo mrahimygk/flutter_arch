@@ -108,19 +108,19 @@ class CoinListPage extends BasePage<CoinListCubit, CoinListState, void> {
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: item.url == null
-                          ? Container(
-                          height: coinIconSize,
-                          width: coinIconSize,
-                        child: Image.asset(coinPlaceholderEmpty),
-                      )
+                          ? Image.asset(
+                              coinPlaceholderEmpty,
+                              height: coinIconSize,
+                              width: coinIconSize,
+                            )
                           : Container(
                               height: coinIconSize,
                               width: coinIconSize,
                               child: FadeInImage(
-                                fadeOutDuration:
-                                    const Duration(milliseconds: coinFadeDuration),
-                                fadeInDuration:
-                                    const Duration(milliseconds: coinFadeDuration),
+                                fadeOutDuration: const Duration(
+                                    milliseconds: coinFadeDuration),
+                                fadeInDuration: const Duration(
+                                    milliseconds: coinFadeDuration),
                                 imageErrorBuilder: (
                                   BuildContext context,
                                   Object error,
