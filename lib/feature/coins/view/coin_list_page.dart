@@ -1,5 +1,7 @@
 import 'package:easy_localization/easy_localization.dart' as localization;
 import 'package:flutter/material.dart';
+import 'package:flutter_architecture/common/assets/dimens.dart';
+import 'package:flutter_architecture/common/assets/durations.dart';
 import 'package:flutter_architecture/common/assets/placeholders.dart';
 import 'package:flutter_architecture/common/base/base_page.dart';
 import 'package:flutter_architecture/common/widgets/api_error_widget.dart';
@@ -106,18 +108,19 @@ class CoinListPage extends BasePage<CoinListCubit, CoinListState, void> {
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: item.url == null
-                          ? Icon(
-                              Icons.attach_money,
-                              size: 24.0,
-                            )
+                          ? Container(
+                          height: coinIconSize,
+                          width: coinIconSize,
+                        child: Image.asset(coinPlaceholderEmpty),
+                      )
                           : Container(
-                              height: 24.0,
-                              width: 24.0,
+                              height: coinIconSize,
+                              width: coinIconSize,
                               child: FadeInImage(
                                 fadeOutDuration:
-                                    const Duration(milliseconds: 200),
+                                    const Duration(milliseconds: coinFadeDuration),
                                 fadeInDuration:
-                                    const Duration(milliseconds: 200),
+                                    const Duration(milliseconds: coinFadeDuration),
                                 imageErrorBuilder: (
                                   BuildContext context,
                                   Object error,
