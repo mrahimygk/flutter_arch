@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_architecture/common/base/base_page.dart';
 import 'package:flutter_architecture/common/widgets/api_error_widget.dart';
 import 'package:flutter_architecture/common/widgets/drawer.dart';
-import 'package:flutter_architecture/di.dart';
+import 'package:flutter_architecture/app/di.dart';
 import 'package:flutter_architecture/domain/model/post/post.dart';
 import 'package:flutter_architecture/feature/posts/logic/post_list_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

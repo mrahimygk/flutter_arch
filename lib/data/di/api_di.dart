@@ -2,7 +2,7 @@ import 'package:flutter_architecture/data/api/coin/coins_api.dart';
 import 'package:flutter_architecture/data/dio/coinapi_interceptor.dart';
 import 'package:flutter_architecture/data/dio/dio_interceptor.dart';
 import 'package:flutter_architecture/data/api/posts_api.dart';
-import 'package:flutter_architecture/di.dart';
+import 'package:flutter_architecture/app/di.dart';
 
 void registerApiModule() {
   serviceLocator.registerSingleton(DioInterceptor());

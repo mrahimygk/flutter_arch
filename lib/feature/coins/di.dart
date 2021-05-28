@@ -1,4 +1,4 @@
-import 'package:flutter_architecture/di.dart';
+import 'package:flutter_architecture/app/di.dart';
 import 'package:flutter_architecture/domain/usecase/coin/get_coin_icons_usecase.dart';
 import 'package:flutter_architecture/domain/usecase/coin/get_coins_usecase.dart';
 

@@ -1,4 +1,4 @@
-import 'package:flutter_architecture/di.dart';
+import 'package:flutter_architecture/app/di.dart';
 import 'package:flutter_architecture/navigation/manager.dart';
 import 'package:flutter_architecture/navigation/routes.dart';
 
