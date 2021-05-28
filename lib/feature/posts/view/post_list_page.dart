@@ -1,17 +1,18 @@
 import 'package:easy_localization/easy_localization.dart' as localization;
 import 'package:flutter/material.dart';
+import 'package:flutter_architecture/app/di.dart';
 import 'package:flutter_architecture/common/base/base_page.dart';
 import 'package:flutter_architecture/common/widgets/api_error_widget.dart';
 import 'package:flutter_architecture/common/widgets/drawer.dart';
-import 'package:flutter_architecture/app/di.dart';
 import 'package:flutter_architecture/domain/model/post/post.dart';
 import 'package:flutter_architecture/feature/posts/logic/post_list_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class PostListPage extends BasePage<PostListCubit, PostListState, void> {
   final PostListCubit _cubit = serviceLocator.get<PostListCubit>();
+  final VoidCallback onToggleTheme;
 
-  PostListPage({Key? key}) : super(key: key) {
+  PostListPage(this.onToggleTheme, {Key? key}) : super(key: key) {
     _cubit.getPostList();
   }
 
@@ -26,6 +27,7 @@ class PostListPage extends BasePage<PostListCubit, PostListState, void> {
         onLanguageChanged: (Locale? locale) {
           localization.EasyLocalization.of(context)!.setLocale(locale!);
         },
+        onToggleTheme: onToggleTheme,
       ),
       body: Column(
         mainAxisSize: MainAxisSize.max,

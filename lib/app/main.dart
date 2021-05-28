@@ -19,9 +19,15 @@ void main() async {
   ));
 }
 
-class FlutterArchApp extends StatelessWidget {
+class FlutterArchApp extends StatefulWidget {
+  @override
+  _FlutterArchAppState createState() => _FlutterArchAppState();
+}
+
+class _FlutterArchAppState extends State<FlutterArchApp> {
   final NavigationManager _navigationManager =
       di.serviceLocator.get<NavigationManager>();
+  var isDarkMode = false;
 
   @override
   Widget build(BuildContext context) {
@@ -31,8 +37,15 @@ class FlutterArchApp extends StatelessWidget {
       locale: context.locale,
       title: 'Flutter Architecture Demo',
       initialRoute: _navigationManager.initialRoute,
-      routes: _navigationManager.initializeNavigationRoutes(context),
-      theme: lightTheme,
+      routes: _navigationManager.initializeNavigationRoutes(
+        context,
+        onToggleTheme: () {
+          setState(() {
+            isDarkMode = !isDarkMode;
+          });
+        },
+      ),
+      theme: isDarkMode ? darkTheme : lightTheme,
       darkTheme: darkTheme,
       themeMode: ThemeMode.system,
     );

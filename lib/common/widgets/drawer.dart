@@ -5,12 +5,19 @@ import 'package:flutter_architecture/domain/model/locale/app_locale.dart';
 
 class AppDrawer extends StatefulWidget {
   final Function(Locale? locale)? onLanguageChanged;
+  final VoidCallback onToggleTheme;
 
-  const AppDrawer({Key? key, this.onLanguageChanged}) : super(key: key);
+  const AppDrawer({
+    Key? key,
+    this.onLanguageChanged,
+    required this.onToggleTheme,
+  }) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() =>
-      AppDrawerState(onLanguageChanged: onLanguageChanged);
+  State<StatefulWidget> createState() => AppDrawerState(
+        onToggleTheme: onToggleTheme,
+        onLanguageChanged: onLanguageChanged,
+      );
 }
 
 class AppDrawerState extends State<AppDrawer> {
@@ -18,8 +25,13 @@ class AppDrawerState extends State<AppDrawer> {
   bool isDarkMode = false;
 
   final Function(Locale? locale)? onLanguageChanged;
+  final VoidCallback onToggleTheme;
 
-  AppDrawerState({Key? key, this.onLanguageChanged});
+  AppDrawerState({
+    Key? key,
+    this.onLanguageChanged,
+    required this.onToggleTheme,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -64,16 +76,13 @@ class AppDrawerState extends State<AppDrawer> {
 
           if (item.type == AppDrawerItems.DARK_MODE) {
             return ListTile(
-              title: Text(items[index].title.tr()),
-              trailing: Switch(
-                value: isDarkMode,
-                onChanged: (bool newValue){
-                  setState(() {
-                    isDarkMode = newValue;
-                  });
-                },
-              )
-            );
+                title: Text(items[index].title.tr()),
+                trailing: Switch(
+                  value: isDarkMode,
+                  onChanged: (bool newValue) {
+                    onToggleTheme.call();
+                  },
+                ));
           }
 
           return ListTile(title: Text(items[index].title.tr()));

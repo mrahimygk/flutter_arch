@@ -14,7 +14,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class CoinListPage extends BasePage<CoinListCubit, CoinListState, void> {
   final CoinListCubit _cubit = serviceLocator.get<CoinListCubit>();
 
-  CoinListPage({Key? key}) : super(key: key) {
+  final VoidCallback onToggleTheme;
+
+  CoinListPage(this.onToggleTheme, {Key? key}) : super(key: key) {
     _cubit.getCoinList();
   }
 
@@ -27,6 +29,7 @@ class CoinListPage extends BasePage<CoinListCubit, CoinListState, void> {
         title: Text("coinList".tr()),
       ),
       drawer: AppDrawer(
+        onToggleTheme: onToggleTheme,
         onLanguageChanged: (Locale? locale) {
           localization.EasyLocalization.of(context)!.setLocale(locale!);
         },
