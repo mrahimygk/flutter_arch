@@ -29,17 +29,23 @@ class FlutterArchApp extends StatefulWidget {
 class _FlutterArchAppState extends State<FlutterArchApp> {
   final NavigationManager _navigationManager =
       di.serviceLocator.get<NavigationManager>();
-  var isDarkMode = false;
+  var isDarkMode = WidgetsBinding.instance?.window.platformBrightness == Brightness.dark;
 
   @override
   void initState() {
     getPrefs()
-        .getBoolean(BOOL_PREFS_KEY_IS_THEME_DARK, false)
+        .getBoolean(BOOL_PREFS_KEY_IS_THEME_DARK, WidgetsBinding.instance?.window.platformBrightness == Brightness.dark)
         .then((bool value) {
       setState(() {
         isDarkMode = value;
       });
     });
+
+    WidgetsBinding.instance?.window.onPlatformBrightnessChanged = () {
+      final value =
+          WidgetsBinding.instance?.window.platformBrightness == Brightness.dark;
+      saveThemePrefs(value);
+    };
     super.initState();
   }
 
@@ -54,21 +60,23 @@ class _FlutterArchAppState extends State<FlutterArchApp> {
       routes: _navigationManager.initializeNavigationRoutes(
         context,
         onToggleTheme: () {
-          getPrefs()
-              .saveBoolean(BOOL_PREFS_KEY_IS_THEME_DARK, !isDarkMode)
-              .then((bool value) {
-            setState(() {
-              isDarkMode = !isDarkMode;
-            });
-          });
+          saveThemePrefs(!isDarkMode);
         },
       ),
       theme: isDarkMode ? darkTheme : lightTheme,
-      darkTheme: darkTheme,
-      themeMode: ThemeMode.system,
     );
   }
 
   AppSharedPreferences getPrefs() =>
       di.serviceLocator.get<AppSharedPreferences>();
+
+  void saveThemePrefs(bool newValue) {
+    getPrefs()
+        .saveBoolean(BOOL_PREFS_KEY_IS_THEME_DARK, newValue)
+        .then((bool value) {
+      setState(() {
+        isDarkMode = newValue;
+      });
+    });
+  }
 }
