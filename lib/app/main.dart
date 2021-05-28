@@ -1,7 +1,9 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_architecture/common/data/locales.dart';
+import 'package:flutter_architecture/common/data/preferences_keys.dart';
 import 'package:flutter_architecture/common/styles/themes.dart';
+import 'package:flutter_architecture/data/prefs/app_shared_prefs.dart';
 import 'package:flutter_architecture/navigation/manager.dart';
 
 import 'di.dart' as di;
@@ -30,6 +32,18 @@ class _FlutterArchAppState extends State<FlutterArchApp> {
   var isDarkMode = false;
 
   @override
+  void initState() {
+    getPrefs()
+        .getBoolean(BOOL_PREFS_KEY_IS_THEME_DARK, false)
+        .then((bool value) {
+      setState(() {
+        isDarkMode = value;
+      });
+    });
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return MaterialApp(
       localizationsDelegates: context.localizationDelegates,
@@ -40,8 +54,12 @@ class _FlutterArchAppState extends State<FlutterArchApp> {
       routes: _navigationManager.initializeNavigationRoutes(
         context,
         onToggleTheme: () {
-          setState(() {
-            isDarkMode = !isDarkMode;
+          getPrefs()
+              .saveBoolean(BOOL_PREFS_KEY_IS_THEME_DARK, !isDarkMode)
+              .then((bool value) {
+            setState(() {
+              isDarkMode = !isDarkMode;
+            });
           });
         },
       ),
@@ -50,4 +68,7 @@ class _FlutterArchAppState extends State<FlutterArchApp> {
       themeMode: ThemeMode.system,
     );
   }
+
+  AppSharedPreferences getPrefs() =>
+      di.serviceLocator.get<AppSharedPreferences>();
 }
