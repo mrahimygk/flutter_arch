@@ -9,5 +9,5 @@ abstract class AppSharedPreferences {
   Future<bool> saveString(String key, String value);
   Future<String> getString(String key);
   Future<bool> saveBoolean(String key, bool value);
-  Future<bool> getBoolean(String key);
+  Future<bool> getBoolean(String key, bool defaultValue);
 }
