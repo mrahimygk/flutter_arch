@@ -19,6 +19,7 @@ class CoinListPage extends BasePage<CoinListCubit, CoinListState, void> {
   @override
   Widget buildPageWidget(BuildContext context) {
     final TextDirection direction = Directionality.of(context);
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
     return Scaffold(
       appBar: AppBar(
         title: Text("coinList".tr()),
@@ -60,12 +61,14 @@ class CoinListPage extends BasePage<CoinListCubit, CoinListState, void> {
 
               if (state is CoinListDataReceivedState) {
                 return Expanded(
-                    child: _buildCoinListView(state.coins, direction));
+                    child:
+                        _buildCoinListView(state.coins, direction, isDarkMode));
               }
 
               if (state is CoinListDataFilledState) {
                 return Expanded(
-                    child: _buildCoinListView(state.coins, direction));
+                    child:
+                        _buildCoinListView(state.coins, direction, isDarkMode));
               }
 
               throw Exception("Please handle all states above");
@@ -79,7 +82,8 @@ class CoinListPage extends BasePage<CoinListCubit, CoinListState, void> {
   @override
   CoinListCubit getPageBloc() => _cubit;
 
-  Widget _buildCoinListView(List<Coin> posts, TextDirection direction) {
+  Widget _buildCoinListView(
+      List<Coin> posts, TextDirection direction, bool isDarkMode) {
     return ListView.separated(
         separatorBuilder: (context, index) {
           return Divider(
@@ -110,16 +114,29 @@ class CoinListPage extends BasePage<CoinListCubit, CoinListState, void> {
                               height: 24.0,
                               width: 24.0,
                               child: FadeInImage(
-                                placeholder: AssetImage(coinPlaceholder),
-                                image: NetworkImage(item.url!),
+                                fadeOutDuration:
+                                    const Duration(milliseconds: 200),
+                                fadeInDuration:
+                                    const Duration(milliseconds: 200),
+                                imageErrorBuilder: (
+                                  BuildContext context,
+                                  Object error,
+                                  StackTrace? stackTrace,
+                                ) {
+                                  return Image.asset(coinIconErrorPlaceholder);
+                                },
+                                placeholder: AssetImage(isDarkMode
+                                    ? coinPlaceholderDark
+                                    : coinPlaceholder),
+                                image: NetworkImage("${item.url}"),
                               ),
                             ),
                     ),
                     Flexible(
                         child: Text(
-                          "${item.name} (${item.id})",
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        )),
+                      "${item.name} (${item.id})",
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    )),
                   ],
                 ),
                 Padding(
