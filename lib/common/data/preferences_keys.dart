@@ -1,0 +1,1 @@
+const String BOOL_PREFS_KEY_IS_THEME_DARK =  "is_theme_dark";
