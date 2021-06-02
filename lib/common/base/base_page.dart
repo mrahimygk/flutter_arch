@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_architecture/app/di.dart';
 import 'package:flutter_architecture/common/base/page_state.dart';
+import 'package:flutter_architecture/navigation/manager.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 /// BaseScreen needs T,S,U
@@ -10,6 +12,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 abstract class BasePage<T extends Cubit<S>, S extends PageState, U>
     extends StatelessWidget {
   final _scaffoldKey = GlobalKey<ScaffoldState>();
+  final _navigationManager = serviceLocator<NavigationManager>();
 
   U? args;
 
@@ -27,7 +30,11 @@ abstract class BasePage<T extends Cubit<S>, S extends PageState, U>
       listeners: [
         BlocListener<T, S>(
           bloc: getPageBloc(),
-          listener: (context, state) {},
+          listener: (context, state) {
+            if (state is NavigationState) {
+              _handleNavigation(context, state);
+            }
+          },
         ),
       ],
       child: Scaffold(
@@ -35,5 +42,19 @@ abstract class BasePage<T extends Cubit<S>, S extends PageState, U>
         body: buildPageWidget(context),
       ),
     );
+  }
+
+  void _handleNavigation(BuildContext context, NavigationState state) {
+    /**
+     * Default is PUSH
+     */
+    if (state.navigationType == null) {
+      _navigationManager.pushNamed(
+        context,
+        state.destination,
+        state.args,
+        popUntilName: state.popUntil,
+      );
+    }
   }
 }
