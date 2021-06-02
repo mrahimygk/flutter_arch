@@ -62,6 +62,12 @@ class CoinsRepositoryImpl extends CoinsRepository {
   Stream<ApiResource<dom.Coin>> getCoinById(String id) async* {
     yield ApiResource(Status.LOADING, null, null);
 
-    throw UnimplementedError();
+    final ApiResource<dom.Coin> data = await api.getCoinById(id).then((List<dat.Coin> value) {
+      return ApiResource(Status.SUCCESS, value.first.toDomain(), null);
+    }).onError((error, stackTrace) {
+      return ApiResource(Status.ERROR, null, (error as DioError).message);
+    });
+
+    yield data;
   }
 }
