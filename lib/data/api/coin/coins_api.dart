@@ -16,5 +16,5 @@ abstract class CoinsApi {
   Future<List<CoinIcon>> getCoinIcons({@Path("iconSize") int iconSize = 24});
 
   @GET("exchanges/{id}/")
-  Future<Coin> getCoinById(@Path("id") int id);
+  Future<List<Coin>> getCoinById(@Path("id") String id);
 }

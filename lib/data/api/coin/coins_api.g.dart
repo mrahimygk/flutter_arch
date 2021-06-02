@@ -47,16 +47,18 @@ class _CoinsApi implements CoinsApi {
   }
 
   @override
-  Future<Coin> getCoinById(id) async {
+  Future<List<Coin>> getCoinById(id) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
-    final _result = await _dio.fetch<Map<String, dynamic>>(_setStreamType<Coin>(
+    final _result = await _dio.fetch<List<dynamic>>(_setStreamType<Coin>(
         Options(method: 'GET', headers: <String, dynamic>{}, extra: _extra)
             .compose(_dio.options, 'exchanges/$id/',
                 queryParameters: queryParameters, data: _data)
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = Coin.fromJson(_result.data!);
+    final value = _result.data!
+        .map((dynamic i) => Coin.fromJson(i as Map<String, dynamic>))
+        .toList();
     return value;
   }
 
