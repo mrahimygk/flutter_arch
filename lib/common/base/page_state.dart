@@ -15,6 +15,6 @@ abstract class NavigationState extends PageState {
     this.destination,
     this.args, {
     this.popUntil,
-    this.navigationType = NavigationType.PUSH,
+    this.navigationType,
   });
 }
