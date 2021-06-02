@@ -35,7 +35,6 @@ class CoinListDataReceivedState extends CoinListState {
 
   @override
   List<Object?> get props => [coins];
-
 }
 
 class CoinListDataFilledState extends CoinListState {
@@ -45,7 +44,22 @@ class CoinListDataFilledState extends CoinListState {
 
   @override
   List<Object?> get props => [coins];
-
 }
 
-//TODO: add navigate state to go to details
+class CoinListNavigationState extends CoinListState implements NavigationState {
+  @override
+  final String destination;
+  @override
+  final dynamic args;
+
+  @override
+  String? popUntil;
+
+  @override
+  NavigationType? navigationType;
+
+  CoinListNavigationState(this.destination, this.args);
+
+  @override
+  List<Object> get props => [args, destination];
+}
