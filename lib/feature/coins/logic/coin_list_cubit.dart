@@ -6,6 +6,8 @@ import 'package:flutter_architecture/domain/model/coin/coin.dart';
 import 'package:flutter_architecture/domain/model/coin/coin_icon.dart';
 import 'package:flutter_architecture/domain/usecase/coin/get_coins_usecase.dart';
 import 'package:flutter_architecture/domain/usecase/coin/get_coin_icons_usecase.dart';
+import 'package:flutter_architecture/navigation/routes.dart';
+import 'package:flutter_architecture/navigation/type.dart';
 
 part 'coin_list_state.dart';
 
@@ -62,5 +64,9 @@ class CoinListCubit extends PageCubit<CoinListState> {
     }).onError((e, s) {
       emit(CoinListErrorState(e.toString()));
     });
+  }
+
+  void navigateToCoinDetails(Coin coin){
+    emit(CoinListNavigationState(NavigationRoutes.COIN_DETAILS, coin));
   }
 }
