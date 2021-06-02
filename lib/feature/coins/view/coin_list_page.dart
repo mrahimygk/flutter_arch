@@ -9,6 +9,7 @@ import 'package:flutter_architecture/common/widgets/drawer.dart';
 import 'package:flutter_architecture/app/di.dart';
 import 'package:flutter_architecture/domain/model/coin/coin.dart';
 import 'package:flutter_architecture/feature/coins/logic/coin_list_cubit.dart';
+import 'package:flutter_architecture/navigation/routes.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CoinListPage extends BasePage<CoinListCubit, CoinListState, void> {
@@ -43,7 +44,7 @@ class CoinListPage extends BasePage<CoinListCubit, CoinListState, void> {
               return previousState != currentState;
             },
             builder: (BuildContext context, CoinListState state) {
-              if (state is CoinListInitialState) {
+              if (state is CoinListInitialState || state is CoinListNavigationState) {
                 return Container(color: Colors.white);
               }
 
@@ -76,7 +77,7 @@ class CoinListPage extends BasePage<CoinListCubit, CoinListState, void> {
                         _buildCoinListView(state.coins, direction, isDarkMode));
               }
 
-              throw Exception("Please handle all states above");
+              throw Exception("Please handle all states above $state");
             },
           ),
         ],
@@ -88,7 +89,7 @@ class CoinListPage extends BasePage<CoinListCubit, CoinListState, void> {
   CoinListCubit getPageBloc() => _cubit;
 
   Widget _buildCoinListView(
-      List<Coin> posts, TextDirection direction, bool isDarkMode) {
+      List<Coin> coins, TextDirection direction, bool isDarkMode) {
     return ListView.separated(
         separatorBuilder: (context, index) {
           return Divider(
@@ -98,58 +99,64 @@ class CoinListPage extends BasePage<CoinListCubit, CoinListState, void> {
             height: 1,
           );
         },
-        itemCount: posts.length,
+        itemCount: coins.length,
         itemBuilder: (context, index) {
-          final item = posts[index];
-          return Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: item.url == null
-                          ? Image.asset(
-                              coinPlaceholderEmpty,
-                              height: coinIconSize,
-                              width: coinIconSize,
-                            )
-                          : Container(
-                              height: coinIconSize,
-                              width: coinIconSize,
-                              child: FadeInImage(
-                                fadeOutDuration: const Duration(
-                                    milliseconds: coinFadeDuration),
-                                fadeInDuration: const Duration(
-                                    milliseconds: coinFadeDuration),
-                                imageErrorBuilder: (
-                                  BuildContext context,
-                                  Object error,
-                                  StackTrace? stackTrace,
-                                ) {
-                                  return Image.asset(coinIconErrorPlaceholder);
-                                },
-                                placeholder: AssetImage(isDarkMode
-                                    ? coinPlaceholderDark
-                                    : coinPlaceholder),
-                                image: NetworkImage("${item.url}"),
+          final item = coins[index];
+          return GestureDetector(
+            onTapUp: (d){
+              // _cubit.navigateToCoinDetails(item);
+              Navigator.of(context).pushNamed(NavigationRoutes.COIN_DETAILS, arguments: item);
+            },
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: item.url == null
+                            ? Image.asset(
+                                coinPlaceholderEmpty,
+                                height: coinIconSize,
+                                width: coinIconSize,
+                              )
+                            : Container(
+                                height: coinIconSize,
+                                width: coinIconSize,
+                                child: FadeInImage(
+                                  fadeOutDuration: const Duration(
+                                      milliseconds: coinFadeDuration),
+                                  fadeInDuration: const Duration(
+                                      milliseconds: coinFadeDuration),
+                                  imageErrorBuilder: (
+                                    BuildContext context,
+                                    Object error,
+                                    StackTrace? stackTrace,
+                                  ) {
+                                    return Image.asset(coinIconErrorPlaceholder);
+                                  },
+                                  placeholder: AssetImage(isDarkMode
+                                      ? coinPlaceholderDark
+                                      : coinPlaceholder),
+                                  image: NetworkImage("${item.url}"),
+                                ),
                               ),
-                            ),
-                    ),
-                    Flexible(
-                        child: Text(
-                      "${item.name} (${item.id})",
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    )),
-                  ],
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(item.website),
-                ),
-              ],
+                      ),
+                      Flexible(
+                          child: Text(
+                        "${item.name} (${item.id})",
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      )),
+                    ],
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(item.website),
+                  ),
+                ],
+              ),
             ),
           );
         });
