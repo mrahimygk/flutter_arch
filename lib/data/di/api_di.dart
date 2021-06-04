@@ -1,5 +1,6 @@
 import 'package:flutter_architecture/app/di.dart';
 import 'package:flutter_architecture/data/api/coin/coins_api.dart';
+import 'package:flutter_architecture/data/api/coin/exchange_rate_api.dart';
 import 'package:flutter_architecture/data/api/posts_api.dart';
 import 'package:flutter_architecture/data/dio/coinapi_interceptor.dart';
 import 'package:flutter_architecture/data/dio/dio_interceptor.dart';
@@ -28,6 +29,10 @@ void registerApiModule() {
       baseUrl: serviceLocator.get(instanceName: "BASE_URL")));
 
   serviceLocator.registerSingleton(CoinsApi(
+      serviceLocator<CoinApiInterceptor>().getDioInstance(),
+      baseUrl: serviceLocator.get(instanceName: "BASE_URL_COIN_API")));
+
+  serviceLocator.registerSingleton(ExchangeRateApi(
       serviceLocator<CoinApiInterceptor>().getDioInstance(),
       baseUrl: serviceLocator.get(instanceName: "BASE_URL_COIN_API")));
 }
