@@ -45,7 +45,7 @@ class CoinExchangeRatesPage extends BasePage<CoinExchangeRatesCubit,
                 return Center(
                   child: Padding(
                       padding: const EdgeInsets.all(16.0),
-                      child: ApiErrorWidget("No data, retry", () {
+                      child: ApiErrorWidget("No rates data, you can retry", () {
                         _cubit.getCoinExchangeRates(coin.id);
                       })),
                 );
