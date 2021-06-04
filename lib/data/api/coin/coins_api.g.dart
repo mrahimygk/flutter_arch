@@ -51,12 +51,12 @@ class _CoinsApi implements CoinsApi {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
-    final _result = await _dio.fetch<List<dynamic>>(_setStreamType<Coin>(
+    final _result = await _dio.fetch<List<dynamic>>(_setStreamType<List<Coin>>(
         Options(method: 'GET', headers: <String, dynamic>{}, extra: _extra)
             .compose(_dio.options, 'exchanges/$id/',
                 queryParameters: queryParameters, data: _data)
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = _result.data!
+    var value = _result.data!
         .map((dynamic i) => Coin.fromJson(i as Map<String, dynamic>))
         .toList();
     return value;
