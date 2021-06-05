@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_architecture/navigation/type.dart';
 
+//TODO: this can be renamed to WidgetState
 abstract class PageState extends Equatable {
   const PageState();
 }
