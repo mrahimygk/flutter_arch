@@ -3,11 +3,11 @@ import 'package:flutter_architecture/common/transform/coin/coin.dart';
 import 'package:flutter_architecture/common/transform/coin/coin_icon.dart';
 import 'package:flutter_architecture/data/api/coin/coins_api.dart';
 import 'package:flutter_architecture/data/model/coin/coin.dart' as dat;
-import 'package:flutter_architecture/data/model/coin/coin_icon.dart' as ciDat;
+import 'package:flutter_architecture/data/model/coin/coin_icon.dart' as dat;
 import 'package:flutter_architecture/domain/model/base/api_resource.dart';
 import 'package:flutter_architecture/domain/model/base/status.dart';
 import 'package:flutter_architecture/domain/model/coin/coin.dart' as dom;
-import 'package:flutter_architecture/domain/model/coin/coin_icon.dart' as ciDom;
+import 'package:flutter_architecture/domain/model/coin/coin_icon.dart' as dom;
 
 abstract class CoinsRepository {
   final CoinsApi api;
@@ -16,7 +16,7 @@ abstract class CoinsRepository {
 
   Stream<ApiResource<List<dom.Coin>>> getCoins();
 
-  Stream<ApiResource<List<ciDom.CoinIcon>>> getCoinIcons();
+  Stream<ApiResource<List<dom.CoinIcon>>> getCoinIcons();
 
   Stream<ApiResource<dom.Coin>> getCoinById(String id);
 }
@@ -40,14 +40,14 @@ class CoinsRepositoryImpl extends CoinsRepository {
   }
 
   @override
-  Stream<ApiResource<List<ciDom.CoinIcon>>> getCoinIcons() async* {
+  Stream<ApiResource<List<dom.CoinIcon>>> getCoinIcons() async* {
     yield ApiResource(Status.LOADING, null, null);
 
-    final ApiResource<List<ciDom.CoinIcon>> data =
-        await api.getCoinIcons().then((List<ciDat.CoinIcon> value) {
+    final ApiResource<List<dom.CoinIcon>> data =
+        await api.getCoinIcons().then((List<dat.CoinIcon> value) {
       return ApiResource(
           Status.SUCCESS,
-          value.map((ciDat.CoinIcon e) {
+          value.map((dat.CoinIcon e) {
             return e.toDomain();
           }).toList(),
           null);
