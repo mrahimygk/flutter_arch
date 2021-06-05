@@ -20,6 +20,7 @@ abstract class BasePage<T extends Cubit<S>, S extends PageState, U>
 
   T getPageBloc();
 
+  //TODO: rename to buildWidget
   Widget buildPageWidget(BuildContext context);
 
   @override
