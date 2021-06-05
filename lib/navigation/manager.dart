@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_architecture/feature/coins/details/view/coin_details_page.dart';
-import 'package:flutter_architecture/feature/coins/view/coin_list_page.dart';
+import 'package:flutter_architecture/feature/coins/list/view/coin_list_page.dart';
 import 'package:flutter_architecture/feature/posts/view/post_list_page.dart';
 import 'package:flutter_architecture/navigation/routes.dart';
 

@@ -4,7 +4,7 @@ import 'package:flutter_architecture/common/base/base_page.dart';
 import 'package:flutter_architecture/common/widgets/api_error_widget.dart';
 import 'package:flutter_architecture/domain/model/coin/coin.dart';
 import 'package:flutter_architecture/domain/model/coin/exchange_rate.dart';
-import 'package:flutter_architecture/feature/coins/details/rates/logic/coin_exchange_rates_cubit.dart';
+import 'package:flutter_architecture/feature/coins/rates/logic/coin_exchange_rates_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CoinExchangeRatesPage extends BasePage<CoinExchangeRatesCubit,

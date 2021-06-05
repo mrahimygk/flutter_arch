@@ -8,7 +8,7 @@ import 'package:flutter_architecture/common/widgets/api_error_widget.dart';
 import 'package:flutter_architecture/common/widgets/drawer.dart';
 import 'package:flutter_architecture/app/di.dart';
 import 'package:flutter_architecture/domain/model/coin/coin.dart';
-import 'package:flutter_architecture/feature/coins/logic/coin_list_cubit.dart';
+import 'package:flutter_architecture/feature/coins/list/logic/coin_list_cubit.dart';
 import 'package:flutter_architecture/navigation/routes.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
