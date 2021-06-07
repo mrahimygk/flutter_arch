@@ -20,10 +20,11 @@ class CoinExchangeRatesWidget
   }
 
   @override
-  Widget buildPageWidget(BuildContext context) {
-    final TextDirection direction = Directionality.of(context);
-    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
-
+  Widget buildWidget(
+    BuildContext context,
+    TextDirection direction,
+    bool isDarkMode,
+  ) {
     return Column(
       mainAxisSize: MainAxisSize.max,
       children: [

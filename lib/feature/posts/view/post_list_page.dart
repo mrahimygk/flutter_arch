@@ -17,8 +17,11 @@ class PostListPage extends BasePage<PostListCubit, PostListState, void> {
   }
 
   @override
-  Widget buildPageWidget(BuildContext context) {
-    final TextDirection direction = Directionality.of(context);
+  Widget buildWidget(
+    BuildContext context,
+    TextDirection direction,
+    bool isDarkMode,
+  ) {
     return Scaffold(
       appBar: AppBar(
         title: Text("appName".tr()),

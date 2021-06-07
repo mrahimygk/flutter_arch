@@ -21,11 +21,13 @@ abstract class BasePage<T extends Cubit<S>, S extends PageState, U>
   T getPageBloc();
 
   //TODO: rename to buildWidget
-  Widget buildPageWidget(BuildContext context);
+  Widget buildWidget(BuildContext context, TextDirection direction, bool isDarkMode);
 
   @override
   Widget build(BuildContext context) {
     args = ModalRoute.of(context)?.settings.arguments as U?;
+    final TextDirection direction = Directionality.of(context);
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
 
     return MultiBlocListener(
       listeners: [
@@ -40,7 +42,7 @@ abstract class BasePage<T extends Cubit<S>, S extends PageState, U>
       ],
       child: Scaffold(
         key: _scaffoldKey,
-        body: buildPageWidget(context),
+        body: buildWidget(context, direction, isDarkMode),
       ),
     );
   }

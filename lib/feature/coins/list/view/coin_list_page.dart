@@ -22,9 +22,11 @@ class CoinListPage extends BasePage<CoinListCubit, CoinListState, void> {
   }
 
   @override
-  Widget buildPageWidget(BuildContext context) {
-    final TextDirection direction = Directionality.of(context);
-    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+  Widget buildWidget(
+    BuildContext context,
+    TextDirection direction,
+    bool isDarkMode,
+  ) {
     return Scaffold(
       appBar: AppBar(
         title: Text("coinList".tr()),
@@ -44,7 +46,8 @@ class CoinListPage extends BasePage<CoinListCubit, CoinListState, void> {
               return previousState != currentState;
             },
             builder: (BuildContext context, CoinListState state) {
-              if (state is CoinListInitialState || state is CoinListNavigationState) {
+              if (state is CoinListInitialState ||
+                  state is CoinListNavigationState) {
                 return Container(color: Colors.white);
               }
 
@@ -103,9 +106,10 @@ class CoinListPage extends BasePage<CoinListCubit, CoinListState, void> {
         itemBuilder: (context, index) {
           final item = coins[index];
           return GestureDetector(
-            onTapUp: (d){
+            onTapUp: (d) {
               // _cubit.navigateToCoinDetails(item);
-              Navigator.of(context).pushNamed(NavigationRoutes.COIN_DETAILS, arguments: item);
+              Navigator.of(context)
+                  .pushNamed(NavigationRoutes.COIN_DETAILS, arguments: item);
             },
             child: Padding(
               padding: const EdgeInsets.all(8.0),
@@ -135,7 +139,8 @@ class CoinListPage extends BasePage<CoinListCubit, CoinListState, void> {
                                     Object error,
                                     StackTrace? stackTrace,
                                   ) {
-                                    return Image.asset(coinIconErrorPlaceholder);
+                                    return Image.asset(
+                                        coinIconErrorPlaceholder);
                                   },
                                   placeholder: AssetImage(isDarkMode
                                       ? coinPlaceholderDark
