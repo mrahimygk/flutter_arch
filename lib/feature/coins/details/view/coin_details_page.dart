@@ -4,7 +4,7 @@ import 'package:flutter_architecture/common/base/base_page.dart';
 import 'package:flutter_architecture/common/widgets/api_error_widget.dart';
 import 'package:flutter_architecture/domain/model/coin/coin.dart';
 import 'package:flutter_architecture/feature/coins/details/logic/coin_details_cubit.dart';
-import 'package:flutter_architecture/feature/coins/rates/view/coin_exchange_rates_page.dart';
+import 'package:flutter_architecture/feature/coins/rates/view/coin_exchange_rates_widget.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CoinDetailsPage
@@ -91,7 +91,7 @@ class CoinDetailsPage
           padding: const EdgeInsets.only(top: 16.0),
           child: Divider(indent: 32.0, endIndent: 32.0),
         ),
-        Expanded(child: CoinExchangeRatesPage(coin))
+        Expanded(child: CoinExchangeRatesWidget(coin))
       ],
     );
   }
