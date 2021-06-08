@@ -5,6 +5,8 @@ import 'package:flutter_architecture/common/widgets/api_error_widget.dart';
 import 'package:flutter_architecture/common/widgets/reveal_card_widget.dart';
 import 'package:flutter_architecture/domain/model/coin/coin.dart';
 import 'package:flutter_architecture/domain/model/coin/exchange_rate.dart';
+import 'package:flutter_architecture/domain/model/coin/rate_history_request.dart';
+import 'package:flutter_architecture/feature/coins/chart/view/coin_chart_widget.dart';
 import 'package:flutter_architecture/feature/coins/rates/logic/coin_exchange_rates_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -25,53 +27,48 @@ class CoinExchangeRatesWidget
     TextDirection direction,
     bool isDarkMode,
   ) {
-    return Column(
-      mainAxisSize: MainAxisSize.max,
-      children: [
-        BlocBuilder(
-          bloc: _cubit,
-          buildWhen: (previousState, currentState) {
-            return previousState != currentState;
-          },
-          builder: (BuildContext context, CoinExchangeRatesState state) {
-            if (state is CoinExchangeRatesInitialState) {
-              return Container(color: Colors.white);
-            }
+    return BlocBuilder(
+      bloc: _cubit,
+      buildWhen: (previousState, currentState) {
+        return previousState != currentState;
+      },
+      builder: (BuildContext context, CoinExchangeRatesState state) {
+        if (state is CoinExchangeRatesInitialState) {
+          return Container(color: Colors.white);
+        }
 
-            if (state is CoinExchangeRatesLoadingState) {
-              return Expanded(
-                  child: Center(child: CircularProgressIndicator()));
-            }
+        if (state is CoinExchangeRatesLoadingState) {
+          return Center(child: CircularProgressIndicator());
+        }
 
-            if (state is CoinExchangeRatesNoDataState) {
-              return Center(
-                child: Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: ApiErrorWidget("No rates data, you can retry", () {
-                      _cubit.getCoinExchangeRates(coin.id);
-                    })),
-              );
-            }
+        if (state is CoinExchangeRatesNoDataState) {
+          return Center(
+            child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: ApiErrorWidget("No rates data, you can retry", () {
+                  _cubit.getCoinExchangeRates("BTC");
+                })),
+          );
+        }
 
-            if (state is CoinExchangeRatesErrorState) {
-              return Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: ApiErrorWidget(state.error, () {
-                    _cubit.getCoinExchangeRates(coin.id);
-                  }));
-            }
+        if (state is CoinExchangeRatesErrorState) {
+          return Center(
+            child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: ApiErrorWidget(state.error, () {
+                  _cubit.getCoinExchangeRates("BTC");
+                })),
+          );
+        }
 
-            if (state is CoinExchangeRatesDataReceivedState) {
-              return Expanded(
-                  child: _buildCoinExchangeRatesView(
-                      state.exchangeRates, direction, isDarkMode));
-            }
+        if (state is CoinExchangeRatesDataReceivedState) {
+          return _buildCoinExchangeRatesView(
+              state.exchangeRates, direction, isDarkMode);
+        }
 
-            throw Exception(
-                "Please handle all states above, unknown state $state");
-          },
-        ),
-      ],
+        throw Exception(
+            "Please handle all states above, unknown state $state");
+      },
     );
   }
 
