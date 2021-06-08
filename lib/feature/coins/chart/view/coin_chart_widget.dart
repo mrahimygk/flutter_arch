@@ -3,14 +3,16 @@ import 'package:flutter_architecture/app/di.dart';
 import 'package:flutter_architecture/common/base/base_page.dart';
 import 'package:flutter_architecture/common/widgets/api_error_widget.dart';
 import 'package:flutter_architecture/domain/model/coin/rate_history.dart';
+import 'package:flutter_architecture/domain/model/coin/rate_history_request.dart';
 import 'package:flutter_architecture/feature/coins/chart/logic/coin_chart_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CoinChartWidget extends BasePage<CoinChartCubit, CoinChartState, void> {
   final CoinChartCubit _cubit = serviceLocator.get<CoinChartCubit>();
+  final RateHistoryRequest rateHistoryRequest;
 
-  CoinChartWidget({Key? key}) : super(key: key) {
-    _cubit.getCoinChart();
+  CoinChartWidget(this.rateHistoryRequest, {Key? key}) : super(key: key) {
+    _cubit.getCoinChart(rateHistoryRequest);
   }
 
   @override
@@ -39,7 +41,7 @@ class CoinChartWidget extends BasePage<CoinChartCubit, CoinChartState, void> {
             child: Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: ApiErrorWidget("No data, please retry", () {
-                  _cubit.getCoinChart();
+                  _cubit.getCoinChart(rateHistoryRequest);
                 })),
           );
         }
@@ -49,7 +51,7 @@ class CoinChartWidget extends BasePage<CoinChartCubit, CoinChartState, void> {
             child: Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: ApiErrorWidget(state.error, () {
-                  _cubit.getCoinChart();
+                  _cubit.getCoinChart(rateHistoryRequest);
                 })),
           );
         }
