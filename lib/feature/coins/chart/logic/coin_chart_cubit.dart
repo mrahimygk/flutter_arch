@@ -18,10 +18,9 @@ class CoinChartCubit extends PageCubit<CoinChartState> {
     this._getRateHistoryUseCase,
   ) : super(CoinChartInitialState());
 
-  void getCoinChart() {
+  void getCoinChart(RateHistoryRequest request) {
     _getRateHistoryUseCase
-        .execute(RateHistoryRequest(
-            "BTC", "USD", "1DAY", "2016-01-01T00:00:00", null))
+        .execute(request)
         .listen((ApiResource<List<RateHistory>> event) {
       switch (event.status) {
         case Status.LOADING:
