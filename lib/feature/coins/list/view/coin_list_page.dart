@@ -61,11 +61,13 @@ class CoinListPage extends BasePage<CoinListCubit, CoinListState, void> {
               }
 
               if (state is CoinListErrorState) {
-                return Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: ApiErrorWidget(state.error, () {
-                      _cubit.getCoinList();
-                    }));
+                return Center(
+                  child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: ApiErrorWidget(state.error, () {
+                        _cubit.getCoinList();
+                      })),
+                );
               }
 
               if (state is CoinListDataReceivedState) {
