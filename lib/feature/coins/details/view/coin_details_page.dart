@@ -22,50 +22,43 @@ class CoinDetailsPage
     bool isDarkMode,
   ) {
     _cubit.getCoinDetails(args!.id);
-    return Scaffold(
-      body: Column(
-        mainAxisSize: MainAxisSize.max,
-        children: [
-          BlocBuilder(
-            bloc: _cubit,
-            buildWhen: (previousState, currentState) {
-              return previousState != currentState;
-            },
-            builder: (BuildContext context, CoinDetailsState state) {
-              if (state is CoinDetailsInitialState) {
-                return Container(color: Colors.white);
-              }
+    return BlocBuilder(
+        bloc: _cubit,
+        buildWhen: (previousState, currentState) {
+          return previousState != currentState;
+        },
+        builder: (BuildContext context, CoinDetailsState state) {
+          if (state is CoinDetailsInitialState) {
+            return Container(color: Colors.white);
+          }
 
-              if (state is CoinDetailsLoadingState) {
-                return Expanded(
-                    child: Center(child: CircularProgressIndicator()));
-              }
+          if (state is CoinDetailsLoadingState) {
+            return Expanded(
+                child: Center(child: CircularProgressIndicator()));
+          }
 
-              if (state is CoinDetailsNoDataState) {
-                return Text("No data, retry");
-              }
+          if (state is CoinDetailsNoDataState) {
+            return Text("No data, retry");
+          }
 
-              if (state is CoinDetailsErrorState) {
-                return Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: ApiErrorWidget(state.error, () {
-                      _cubit.getCoinDetails(args!.id);
-                    }));
-              }
+          if (state is CoinDetailsErrorState) {
+            return Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: ApiErrorWidget(state.error, () {
+                  _cubit.getCoinDetails(args!.id);
+                }));
+          }
 
-              if (state is CoinDetailsDataReceivedState) {
-                return Expanded(
-                    child: _buildCoinDetailsView(
-                        state.coin, direction, isDarkMode));
-              }
+          if (state is CoinDetailsDataReceivedState) {
+            return Expanded(
+                child: _buildCoinDetailsView(
+                    state.coin, direction, isDarkMode));
+          }
 
-              throw Exception(
-                  "Please handle all states above, unknown state $state");
-            },
-          ),
-        ],
-      ),
-    );
+          throw Exception(
+              "Please handle all states above, unknown state $state");
+        },
+      );
   }
 
   @override
