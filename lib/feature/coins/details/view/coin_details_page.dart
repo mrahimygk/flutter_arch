@@ -33,8 +33,7 @@ class CoinDetailsPage
           }
 
           if (state is CoinDetailsLoadingState) {
-            return Expanded(
-                child: Center(child: CircularProgressIndicator()));
+            return Center(child: CircularProgressIndicator());
           }
 
           if (state is CoinDetailsNoDataState) {
@@ -42,17 +41,18 @@ class CoinDetailsPage
           }
 
           if (state is CoinDetailsErrorState) {
-            return Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: ApiErrorWidget(state.error, () {
-                  _cubit.getCoinDetails(args!.id);
-                }));
+            return Center(
+              child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: ApiErrorWidget(state.error, () {
+                    _cubit.getCoinDetails(args!.id);
+                  })),
+            );
           }
 
           if (state is CoinDetailsDataReceivedState) {
-            return Expanded(
-                child: _buildCoinDetailsView(
-                    state.coin, direction, isDarkMode));
+            return _buildCoinDetailsView(
+                state.coin, direction, isDarkMode);
           }
 
           throw Exception(
@@ -71,7 +71,7 @@ class CoinDetailsPage
   ) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
-      mainAxisSize: MainAxisSize.min,
+      mainAxisSize: MainAxisSize.max,
       children: [
         Container(
           height: 48.0,
