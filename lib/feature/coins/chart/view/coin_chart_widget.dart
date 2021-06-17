@@ -33,7 +33,7 @@ class CoinChartWidget extends BasePage<CoinChartCubit, CoinChartState, void> {
         }
 
         if (state is CoinChartLoadingState) {
-          return Expanded(child: Center(child: CircularProgressIndicator()));
+          return Center(child: CircularProgressIndicator());
         }
 
         if (state is CoinChartNoDataState) {
@@ -57,8 +57,7 @@ class CoinChartWidget extends BasePage<CoinChartCubit, CoinChartState, void> {
         }
 
         if (state is CoinChartDataReceivedState) {
-          return Expanded(
-              child: _buildCoinChartView(state.rates, direction, isDarkMode));
+          return _buildCoinChartView(state.rates, direction, isDarkMode);
         }
 
         throw Exception("Please handle all states above $state");
