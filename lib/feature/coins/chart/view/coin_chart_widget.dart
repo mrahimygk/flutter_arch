@@ -12,7 +12,7 @@ class CoinChartWidget extends BasePage<CoinChartCubit, CoinChartState, void> {
   final RateHistoryRequest rateHistoryRequest;
 
   CoinChartWidget(this.rateHistoryRequest, {Key? key}) : super(key: key) {
-    _cubit.getCoinChart(rateHistoryRequest);
+    //TODO: move to another func to be on-demand _cubit.getCoinChart(rateHistoryRequest);
   }
 
   @override
