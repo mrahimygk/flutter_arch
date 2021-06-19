@@ -39,7 +39,7 @@ class RevealAnimatedCardState extends State<RevealAnimatedCardWidget> {
                 child: Card(
                   child: Padding(
                     padding: const EdgeInsets.all(42.0),
-                    child: widget.innerWidget,
+                    child: isRevealed() ? widget.innerWidget : Container(),
                   ),
                 ),
               ),
