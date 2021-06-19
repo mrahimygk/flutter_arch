@@ -48,8 +48,8 @@ class CoinExchangeRatesWidget
               return Center(
                 child: Padding(
                     padding: const EdgeInsets.all(16.0),
-                    child: ApiErrorWidget("No rates data, you can retry", () {
-                      _cubit.getCoinExchangeRates("BTC");
+                    child: ApiErrorWidget("No rates data for ${coin.id}, you can retry", () {
+                      _cubit.getCoinExchangeRates(coin.id);
                     })),
               );
             }
@@ -59,7 +59,7 @@ class CoinExchangeRatesWidget
                 child: Padding(
                     padding: const EdgeInsets.all(16.0),
                     child: ApiErrorWidget(state.error, () {
-                      _cubit.getCoinExchangeRates("BTC");
+                      _cubit.getCoinExchangeRates(coin.id);
                     })),
               );
             }
