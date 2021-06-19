@@ -3,5 +3,6 @@
   "login": "Login",
   "language": "Language",
   "darkMode": "Dark Mode",
-  "coinList": "Coin List"
+  "coinList": "Coin List",
+  "coinDetails": "Coin Details"
 }

@@ -3,5 +3,6 @@
   "login": "connexion",
   "language": "Langue",
   "darkMode": "Mode Nuit",
-  "coinList": "liste des pièces"
+  "coinList": "liste des pièces",
+  "coinDetails": "détails de la pièce"
 }

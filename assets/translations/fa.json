@@ -3,5 +3,6 @@
   "login": "ورود",
   "language": "زبان",
   "darkMode": "حالت شب",
-  "coinList": "فهرست ارزها"
+  "coinList": "فهرست ارزها",
+  "coinDetails": "جزئیات ارز"
 }
