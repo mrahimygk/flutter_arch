@@ -1,7 +1,9 @@
+import 'package:easy_localization/easy_localization.dart' as localization;
 import 'package:flutter/material.dart';
 import 'package:flutter_architecture/app/di.dart';
 import 'package:flutter_architecture/common/base/base_page.dart';
 import 'package:flutter_architecture/common/widgets/api_error_widget.dart';
+import 'package:flutter_architecture/common/widgets/drawer.dart';
 import 'package:flutter_architecture/domain/model/coin/coin.dart';
 import 'package:flutter_architecture/feature/coins/details/logic/coin_details_cubit.dart';
 import 'package:flutter_architecture/feature/coins/rates/view/coin_exchange_rates_widget.dart';
@@ -22,7 +24,17 @@ class CoinDetailsPage
     bool isDarkMode,
   ) {
     _cubit.getCoinDetails(args!.id);
-    return BlocBuilder(
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("coinDetails".tr()),
+      ),
+      drawer: AppDrawer(
+        onToggleTheme: onToggleTheme,
+        onLanguageChanged: (Locale? locale) {
+          localization.EasyLocalization.of(context)!.setLocale(locale!);
+        },
+      ),
+      body: BlocBuilder(
         bloc: _cubit,
         buildWhen: (previousState, currentState) {
           return previousState != currentState;
@@ -51,14 +63,14 @@ class CoinDetailsPage
           }
 
           if (state is CoinDetailsDataReceivedState) {
-            return _buildCoinDetailsView(
-                state.coin, direction, isDarkMode);
+            return _buildCoinDetailsView(state.coin, direction, isDarkMode);
           }
 
           throw Exception(
               "Please handle all states above, unknown state $state");
         },
-      );
+      ),
+    );
   }
 
   @override
