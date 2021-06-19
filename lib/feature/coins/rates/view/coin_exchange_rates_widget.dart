@@ -27,53 +27,48 @@ class CoinExchangeRatesWidget
     TextDirection direction,
     bool isDarkMode,
   ) {
-    return Column(
-        mainAxisSize: MainAxisSize.max,
-      children: [
-        BlocBuilder(
-          bloc: _cubit,
-          buildWhen: (previousState, currentState) {
-            return previousState != currentState;
-          },
-          builder: (BuildContext context, CoinExchangeRatesState state) {
-            if (state is CoinExchangeRatesInitialState) {
-              return Container(color: Colors.white);
-            }
+    return BlocBuilder(
+      bloc: _cubit,
+      buildWhen: (previousState, currentState) {
+        return previousState != currentState;
+      },
+      builder: (BuildContext context, CoinExchangeRatesState state) {
+        if (state is CoinExchangeRatesInitialState) {
+          return Container(color: Colors.white);
+        }
 
-            if (state is CoinExchangeRatesLoadingState) {
-              return Center(child: CircularProgressIndicator());
-            }
+        if (state is CoinExchangeRatesLoadingState) {
+          return Center(child: CircularProgressIndicator());
+        }
 
-            if (state is CoinExchangeRatesNoDataState) {
-              return Center(
-                child: Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: ApiErrorWidget("No rates data for ${coin.id}, you can retry", () {
-                      _cubit.getCoinExchangeRates(coin.id);
-                    })),
-              );
-            }
+        if (state is CoinExchangeRatesNoDataState) {
+          return Center(
+            child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: ApiErrorWidget("No rates data for ${coin.id}, you can retry", () {
+                  _cubit.getCoinExchangeRates(coin.id);
+                })),
+          );
+        }
 
-            if (state is CoinExchangeRatesErrorState) {
-              return Center(
-                child: Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: ApiErrorWidget(state.error, () {
-                      _cubit.getCoinExchangeRates(coin.id);
-                    })),
-              );
-            }
+        if (state is CoinExchangeRatesErrorState) {
+          return Center(
+            child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: ApiErrorWidget(state.error, () {
+                  _cubit.getCoinExchangeRates(coin.id);
+                })),
+          );
+        }
 
-            if (state is CoinExchangeRatesDataReceivedState) {
-              return _buildCoinExchangeRatesView(
-                  state.exchangeRates, direction, isDarkMode);
-            }
+        if (state is CoinExchangeRatesDataReceivedState) {
+          return _buildCoinExchangeRatesView(
+              state.exchangeRates, direction, isDarkMode);
+        }
 
-            throw Exception(
-                "Please handle all states above, unknown state $state");
-          },
-        ),
-      ],
+        throw Exception(
+            "Please handle all states above, unknown state $state");
+      },
     );
   }
 
@@ -95,22 +90,25 @@ class CoinExchangeRatesWidget
         itemBuilder: (BuildContext context, index) {
           final item = exchangeRates[index];
           final key = keys[index];
-          return RevealAnimatedCardWidget(
-            key: key,
-            innerWidget: Center(child: Text("inner ${item.coinId}")),
-            outerWidget: Center(child: Text(item.coinId)),
-            onHide: () {
-              print("hiding");
-            },
-            onReveal: () {
-              keys.forEach((element) {
-                if (keys[index] != element &&
-                    element.currentState != null &&
-                    element.currentState!.isRevealed()) {
-                  element.currentState?.toggleReveal();
-                }
-              });
-            },
+          return SizedBox(
+            width: double.infinity,
+            child: RevealAnimatedCardWidget(
+              key: key,
+              innerWidget: Center(child: CoinChartWidget(RateHistoryRequest(                coin.id, item.coinId, '1MIN', '2016-01-01T00:00:00', null              ))),
+              outerWidget: Center(child: Text(item.coinId)),
+              onHide: () {
+                print("hiding");
+              },
+              onReveal: () {
+                keys.forEach((element) {
+                  if (keys[index] != element &&
+                      element.currentState != null &&
+                      element.currentState!.isRevealed()) {
+                    element.currentState?.toggleReveal();
+                  }
+                });
+              },
+            ),
           );
         });
   }
