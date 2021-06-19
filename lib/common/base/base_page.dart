@@ -11,7 +11,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 /// U is the argument type.
 abstract class BasePage<T extends Cubit<S>, S extends PageState, U>
     extends StatelessWidget {
-  final _scaffoldKey = GlobalKey<ScaffoldState>();
   final _navigationManager = serviceLocator<NavigationManager>();
 
   U? args;
@@ -20,7 +19,11 @@ abstract class BasePage<T extends Cubit<S>, S extends PageState, U>
 
   T getPageBloc();
 
-  Widget buildWidget(BuildContext context, TextDirection direction, bool isDarkMode);
+  Widget buildWidget(
+    BuildContext context,
+    TextDirection direction,
+    bool isDarkMode,
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -39,10 +42,7 @@ abstract class BasePage<T extends Cubit<S>, S extends PageState, U>
           },
         ),
       ],
-      child: Scaffold(
-        key: _scaffoldKey,
-        body: buildWidget(context, direction, isDarkMode),
-      ),
+      child: buildWidget(context, direction, isDarkMode),
     );
   }
 
