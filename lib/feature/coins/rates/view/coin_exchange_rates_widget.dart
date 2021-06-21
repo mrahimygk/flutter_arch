@@ -66,8 +66,7 @@ class CoinExchangeRatesWidget
               state.exchangeRates, direction, isDarkMode);
         }
 
-        throw Exception(
-            "Please handle all states above, unknown state $state");
+        throw Exception("Please handle all states above, unknown state $state");
       },
     );
   }
@@ -90,16 +89,24 @@ class CoinExchangeRatesWidget
         itemBuilder: (BuildContext context, index) {
           final item = exchangeRates[index];
           final key = keys[index];
+          final innerWidget = CoinChartWidget(RateHistoryRequest(
+            "BTC",
+            item.coinId,
+            '1MIN',
+            '2016-01-01T00:00:00',
+            null,
+          ));
           return SizedBox(
             width: double.infinity,
             child: RevealAnimatedCardWidget(
               key: key,
-              innerWidget: Center(child: CoinChartWidget(RateHistoryRequest(                coin.id, item.coinId, '1MIN', '2016-01-01T00:00:00', null              ))),
+              innerWidget: Center(child: innerWidget),
               outerWidget: Center(child: Text(item.coinId)),
               onHide: () {
                 print("hiding");
               },
               onReveal: () {
+                innerWidget.fetchData();
                 keys.forEach((element) {
                   if (keys[index] != element &&
                       element.currentState != null &&
