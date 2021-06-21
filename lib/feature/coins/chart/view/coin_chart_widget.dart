@@ -11,9 +11,7 @@ class CoinChartWidget extends BasePage<CoinChartCubit, CoinChartState, void> {
   final CoinChartCubit _cubit = serviceLocator.get<CoinChartCubit>();
   final RateHistoryRequest rateHistoryRequest;
 
-  CoinChartWidget(this.rateHistoryRequest, {Key? key}) : super(key: key) {
-    //TODO: move to another func to be on-demand _cubit.getCoinChart(rateHistoryRequest);
-  }
+  CoinChartWidget(this.rateHistoryRequest, {Key? key}) : super(key: key);
 
   @override
   Widget buildWidget(
@@ -100,4 +98,6 @@ class CoinChartWidget extends BasePage<CoinChartCubit, CoinChartState, void> {
           );
         });
   }
+
+  void fetchData() => _cubit.getCoinChart(rateHistoryRequest);
 }
