@@ -49,7 +49,9 @@ class CoinsRepositoryImpl extends CoinsRepository {
     yield ApiResource(Status.LOADING, null, null);
 
     final ApiResource<List<dom.CoinIcon>> data =
-        await api.getCoinIcons().then((List<dat.CoinIcon> value) {
+        await (memoryCache.getCoinIcons() ?? api.getCoinIcons())
+            .then((List<dat.CoinIcon> value) {
+      memoryCache.putCoinIcons(value);
       return ApiResource(
           Status.SUCCESS,
           value.map((dat.CoinIcon e) {
@@ -68,7 +70,9 @@ class CoinsRepositoryImpl extends CoinsRepository {
     yield ApiResource(Status.LOADING, null, null);
 
     final ApiResource<dom.Coin> data =
-        await api.getCoinById(id).then((List<dat.Coin> value) {
+        await (memoryCache.getCoinById(id) ?? api.getCoinById(id))
+            .then((List<dat.Coin> value) {
+      memoryCache.putCoin(value.first);
       return ApiResource(Status.SUCCESS, value.first.toDomain(), null);
     }).onError((error, stackTrace) {
       return ApiResource(Status.ERROR, null, (error as DioError).message);
