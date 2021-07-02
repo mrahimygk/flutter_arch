@@ -28,7 +28,7 @@ class ExchangeRateCacheImpl extends ExchangeRateCache {
   Map<String, ExchangeRateResponse>? exchangeRatesForCoin;
 
   /// base_id to (quote_id to RateHistory)
-  Map<RateHistoryRequest, List<RateHistory>>? rateHistoryForTwoCoins;
+  Map<String, List<RateHistory>>? rateHistoryForTwoCoins;
 
   @override
   Future<ExchangeRateResponse>? getExchangeRatesForCoin(String id) =>
@@ -44,10 +44,14 @@ class ExchangeRateCacheImpl extends ExchangeRateCache {
 
   @override
   Future<List<RateHistory>>? getRateHistoryForTwoCoins(
-      RateHistoryRequest request) =>
-      rateHistoryForTwoCoins == null
-          ? null
-          : Future.value(rateHistoryForTwoCoins![request]);
+      RateHistoryRequest request) {
+    final key =
+        "${request.baseId}${request.quoteId}${request.periodId}${request.startTime}${request.endTime}";
+    return rateHistoryForTwoCoins == null ||
+            !rateHistoryForTwoCoins!.containsKey(key)
+        ? null
+        : Future.value(rateHistoryForTwoCoins![key]);
+  }
 
   @override
   void putExchangeRatesForCoin(ExchangeRateResponse response) {
@@ -61,9 +65,10 @@ class ExchangeRateCacheImpl extends ExchangeRateCache {
   void putRateHistoryForTwoCoins(
       RateHistoryRequest request, List<RateHistory> value) {
     if (rateHistoryForTwoCoins == null) {
-      rateHistoryForTwoCoins = Map<RateHistoryRequest, List<RateHistory>>();
+      rateHistoryForTwoCoins = Map<String, List<RateHistory>>();
     }
-
-    rateHistoryForTwoCoins![request] = value;
+    final key =
+        "${request.baseId}${request.quoteId}${request.periodId}${request.startTime}${request.endTime}";
+    rateHistoryForTwoCoins![key] = value;
   }
 }
