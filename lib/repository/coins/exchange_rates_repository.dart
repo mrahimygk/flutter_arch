@@ -3,12 +3,12 @@ import 'package:flutter_architecture/common/transform/coin/exchange_rate.dart';
 import 'package:flutter_architecture/common/transform/coin/history_period.dart';
 import 'package:flutter_architecture/common/transform/coin/rate_history.dart';
 import 'package:flutter_architecture/data/api/coin/exchange_rate_api.dart';
+import 'package:flutter_architecture/data/cache/coin/exchange_rate_cache.dart';
 import 'package:flutter_architecture/data/model/coin/exchange_rate.dart' as dat;
 import 'package:flutter_architecture/data/model/coin/exchange_rate_response.dart';
 import 'package:flutter_architecture/data/model/coin/history_period.dart'
     as dat;
-import 'package:flutter_architecture/data/model/coin/rate_history.dart'
-    as dat;
+import 'package:flutter_architecture/data/model/coin/rate_history.dart' as dat;
 import 'package:flutter_architecture/domain/model/base/api_resource.dart';
 import 'package:flutter_architecture/domain/model/base/status.dart';
 import 'package:flutter_architecture/domain/model/coin/exchange_rate.dart'
@@ -21,8 +21,9 @@ import 'package:flutter_architecture/domain/model/coin/rate_history_request.dart
 
 abstract class ExchangeRatesRepository {
   final ExchangeRateApi api;
+  final ExchangeRateCache memoryCache;
 
-  ExchangeRatesRepository(this.api);
+  ExchangeRatesRepository(this.api, this.memoryCache);
 
   Stream<ApiResource<List<dom.ExchangeRate>>> getExchangeRatesForCoin(
       String id);
@@ -34,16 +35,20 @@ abstract class ExchangeRatesRepository {
 }
 
 class ExchangeRatesRepositoryImpl extends ExchangeRatesRepository {
-  ExchangeRatesRepositoryImpl(ExchangeRateApi postsApi) : super(postsApi);
+  ExchangeRatesRepositoryImpl(
+      ExchangeRateApi api, ExchangeRateCache memoryCache)
+      : super(api, memoryCache);
 
   @override
   Stream<ApiResource<List<dom.ExchangeRate>>> getExchangeRatesForCoin(
       String id) async* {
     yield ApiResource(Status.LOADING, null, null);
 
-    final ApiResource<List<dom.ExchangeRate>> data = await api
-        .getExchangeRatesForCoin(id)
-        .then((ExchangeRateResponse value) {
+    final ApiResource<List<dom.ExchangeRate>> data =
+        await (memoryCache.getExchangeRatesForCoin(id) ??
+                api.getExchangeRatesForCoin(id))
+            .then((ExchangeRateResponse value) {
+      memoryCache.putExchangeRatesForCoin(value);
       return ApiResource(Status.SUCCESS,
           value.rates.map((dat.ExchangeRate e) => e.toDomain()).toList(), null);
     }).onError((error, stackTrace) {
