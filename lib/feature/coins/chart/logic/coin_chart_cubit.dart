@@ -13,34 +13,40 @@ part 'coin_chart_state.dart';
 
 class CoinChartCubit extends PageCubit<CoinChartState> {
   final GetRateHistoryUseCase _getRateHistoryUseCase;
+  List<RateHistory>? currentList;
 
   CoinChartCubit(
     this._getRateHistoryUseCase,
   ) : super(CoinChartInitialState());
 
   void getCoinChart(RateHistoryRequest request) {
-    _getRateHistoryUseCase
-        .execute(request)
-        .listen((ApiResource<List<RateHistory>> event) {
-      switch (event.status) {
-        case Status.LOADING:
-          emit(CoinChartLoadingState());
-          break;
+    if (currentList == null) {
+      _getRateHistoryUseCase
+          .execute(request)
+          .listen((ApiResource<List<RateHistory>> event) {
+        switch (event.status) {
+          case Status.LOADING:
+            emit(CoinChartLoadingState());
+            break;
 
-        case Status.SUCCESS:
-          if (event.data == null || (event.data?.isEmpty == true)) {
-            emit(CoinChartNoDataState());
-          } else {
-            emit(CoinChartDataReceivedState(event.data!));
-          }
-          break;
+          case Status.SUCCESS:
+            if (event.data == null || (event.data?.isEmpty == true)) {
+              emit(CoinChartNoDataState());
+            } else {
+              emit(CoinChartDataReceivedState(event.data!));
+              currentList = event.data;
+            }
+            break;
 
-        case Status.ERROR:
-          emit(CoinChartErrorState(event.message!));
-      }
-    }).onError((e, s) {
-      emit(CoinChartErrorState(e.toString()));
-    });
+          case Status.ERROR:
+            emit(CoinChartErrorState(event.message!));
+        }
+      }).onError((e, s) {
+        emit(CoinChartErrorState(e.toString()));
+      });
+    } else {
+      CoinChartDataReceivedState(currentList!);
+    }
   }
 
   void navigateToCoinDetails(Coin coin) {
