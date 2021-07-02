@@ -3,32 +3,62 @@ import 'package:flutter_architecture/data/model/coin/coin_icon.dart';
 import 'package:retrofit/retrofit.dart';
 
 abstract class CoinsCache {
-  Future<List<Coin>> getCoins();
+  Future<List<Coin>>? getCoins();
 
-  Future<List<CoinIcon>> getCoinIcons({@Path("iconSize") int iconSize = 24});
+  Future<List<CoinIcon>>? getCoinIcons({@Path("iconSize") int iconSize = 24});
 
-  Future<List<Coin>> getCoinById(@Path("id") String id);
+  Future<List<Coin>>? getCoinById(@Path("id") String id);
+
+  void putCoinIcons(List<CoinIcon> icons);
+
+  void putCoin(Coin coin);
+
+  void putCoins(List<Coin> coins);
 }
 
-class CoinsCacheImpl {
-  final exchanges = Map<String, Coin>();
-  final exchangesIcons = Map<String, CoinIcon>();
+class CoinsCacheImpl extends CoinsCache {
+  Map<String, Coin>? exchanges;
+  Map<String, CoinIcon>? exchangesIcons;
 
-  Future<List<Coin>> getCoins() => Future.value(exchanges.values.toList());
+  @override
+  Future<List<Coin>>? getCoins() =>
+      exchanges == null ? null : Future.value(exchanges!.values.toList());
 
-  Future<List<CoinIcon>> getCoinIcons({@Path("iconSize") int iconSize = 24}) =>
-      Future.value(exchangesIcons.values.toList());
+  @override
+  Future<List<CoinIcon>>? getCoinIcons({@Path("iconSize") int iconSize = 24}) =>
+      exchangesIcons == null
+          ? null
+          : Future.value(exchangesIcons!.values.toList());
 
-  Future<List<Coin>> getCoinById(@Path("id") String id) =>
-      Future.value([exchanges[id]!]);
+  @override
+  Future<List<Coin>>? getCoinById(@Path("id") String id) =>
+      exchanges == null || exchanges![id] == null
+          ? null
+          : Future.value([exchanges![id]!]);
 
+  @override
   void putCoin(Coin coin) {
-    exchanges[coin.id] = coin;
+    if (exchanges == null) {
+      exchanges = Map<String, Coin>();
+    }
+    exchanges![coin.id] = coin;
   }
 
   void putCoins(List<Coin> coins) {
+    if (exchanges == null) {
+      exchanges = Map<String, Coin>();
+    }
     coins.forEach((element) {
-      exchanges[element.id] = element;
+      exchanges![element.id] = element;
+    });
+  }
+
+  void putCoinIcons(List<CoinIcon> icons) {
+    if (exchangesIcons == null) {
+      exchangesIcons = Map<String, CoinIcon>();
+    }
+    icons.forEach((element) {
+      exchangesIcons![element.id] = element;
     });
   }
 }
