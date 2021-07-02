@@ -37,6 +37,7 @@ dependencies:
   logger: ^1.0.0
   equatable: ^2.0.0
   flutter_bloc: ^7.0.0
+  fl_chart: ^0.36.2
 
 dev_dependencies:
   test: any #^1.17.4
