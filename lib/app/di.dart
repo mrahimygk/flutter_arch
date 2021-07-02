@@ -1,3 +1,4 @@
+import 'package:flutter_architecture/data/di/cache_di.dart';
 import 'package:flutter_architecture/navigation/di.dart';
 import 'package:get_it/get_it.dart';
 
@@ -10,6 +11,7 @@ final serviceLocator = GetIt.I;
 
 Future<void> loadDiModules() async {
   registerApiModule();
+  registerCacheModule();
   registerRepositoryModule();
   registerUseCaseModule();
   registerNavigationModule();
