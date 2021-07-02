@@ -4,5 +4,6 @@
   "language": "Language",
   "darkMode": "Dark Mode",
   "coinList": "Coin List",
-  "coinDetails": "Coin Details"
+  "coinDetails": "Coin Details",
+  "exchangeRates": "Exchange Rates"
 }
