@@ -13,14 +13,12 @@ part 'coin_chart_state.dart';
 
 class CoinChartCubit extends PageCubit<CoinChartState> {
   final GetRateHistoryUseCase _getRateHistoryUseCase;
-  List<RateHistory>? currentList;
 
   CoinChartCubit(
     this._getRateHistoryUseCase,
   ) : super(CoinChartInitialState());
 
   void getCoinChart(RateHistoryRequest request) {
-    if (currentList == null) {
       _getRateHistoryUseCase
           .execute(request)
           .listen((ApiResource<List<RateHistory>> event) {
@@ -34,7 +32,6 @@ class CoinChartCubit extends PageCubit<CoinChartState> {
               emit(CoinChartNoDataState());
             } else {
               emit(CoinChartDataReceivedState(event.data!));
-              currentList = event.data;
             }
             break;
 
@@ -44,9 +41,6 @@ class CoinChartCubit extends PageCubit<CoinChartState> {
       }).onError((e, s) {
         emit(CoinChartErrorState(e.toString()));
       });
-    } else {
-      CoinChartDataReceivedState(currentList!);
-    }
   }
 
   void navigateToCoinDetails(Coin coin) {
