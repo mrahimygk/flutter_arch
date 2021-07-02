@@ -38,6 +38,7 @@ dependencies:
   equatable: ^2.0.0
   flutter_bloc: ^7.0.0
   fl_chart: ^0.36.2
+  dartx: any
 
 dev_dependencies:
   test: any #^1.17.4
