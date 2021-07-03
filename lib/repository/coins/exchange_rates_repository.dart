@@ -77,16 +77,18 @@ class ExchangeRatesRepositoryImpl extends ExchangeRatesRepository {
   Stream<ApiResource<List<dom.RateHistory>>> getRateHistoryForTwoCoins(
       RateHistoryRequest request) async* {
     yield ApiResource(Status.LOADING, null, null);
-
-    final ApiResource<List<dom.RateHistory>> data = await api
-        .getRateHistoryForTwoCoins(
-      request.baseId,
-      request.quoteId,
-      request.startTime,
-      request.endTime,
-      request.periodId,
-    )
-        .then((List<dat.RateHistory> value) {
+    print(memoryCache.getRateHistoryForTwoCoins(request));
+    final ApiResource<List<dom.RateHistory>> data =
+        await (memoryCache.getRateHistoryForTwoCoins(request) ??
+                api.getRateHistoryForTwoCoins(
+                  request.baseId,
+                  request.quoteId,
+                  request.startTime,
+                  request.endTime,
+                  request.periodId,
+                ))
+            .then((List<dat.RateHistory> value) {
+      memoryCache.putRateHistoryForTwoCoins(request, value);
       return ApiResource(Status.SUCCESS,
           value.map((dat.RateHistory e) => e.toDomain()).toList(), null);
     }).onError((error, stackTrace) {
