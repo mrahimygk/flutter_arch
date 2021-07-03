@@ -100,8 +100,11 @@ class CoinExchangeRatesWidget
             width: double.infinity,
             child: RevealAnimatedCardWidget(
               key: key,
-              innerWidget: Center(child: innerWidget),
-              outerWidget: Center(child: Text(item.coinId)),
+              innerWidget: innerWidget,
+              outerWidget: Center(child: Padding(
+                padding: const EdgeInsets.all(42.0),
+                child: Text(item.coinId),
+              )),
               onHide: () {
                 print("hiding");
               },
