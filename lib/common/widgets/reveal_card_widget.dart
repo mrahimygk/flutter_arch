@@ -37,10 +37,7 @@ class RevealAnimatedCardState extends State<RevealAnimatedCardWidget> {
               Padding(
                 padding: const EdgeInsets.all(6.0),
                 child: Card(
-                  child: Padding(
-                    padding: const EdgeInsets.all(42.0),
-                    child: isRevealed() ? widget.innerWidget : Container(),
-                  ),
+                  child: isRevealed() ? widget.innerWidget : Container(),
                 ),
               ),
             ],
@@ -50,10 +47,7 @@ class RevealAnimatedCardState extends State<RevealAnimatedCardWidget> {
               toggleReveal();
             },
             child: Card(
-              child: Padding(
-                padding: const EdgeInsets.all(48.0),
-                child: widget.outerWidget,
-              ),
+              child: widget.outerWidget,
             ),
           ),
         ],
