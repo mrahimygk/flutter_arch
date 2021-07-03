@@ -31,7 +31,10 @@ class CoinChartWidget extends BasePage<CoinChartCubit, CoinChartState, void> {
         }
 
         if (state is CoinChartLoadingState) {
-          return Center(child: CircularProgressIndicator());
+          return Center(child: Padding(
+            padding: const EdgeInsets.all(36.0),
+            child: CircularProgressIndicator(),
+          ));
         }
 
         if (state is CoinChartNoDataState) {
