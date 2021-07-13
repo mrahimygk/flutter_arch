@@ -9,9 +9,9 @@ class CoinApiInterceptor extends DioInterceptor {
   dynamic requestInterceptor(
       RequestOptions options, RequestInterceptorHandler handler) async {
     options.queryParameters.addAll(
-        {API_KEY_QUERY_PARAM_KEY: "48BA4C65-E141-4E60-9C9F-6E1128706394"});
+        {API_KEY_QUERY_PARAM_KEY: "GET_API_KEY"});
     options.headers
-        .addAll({API_KEY_HEADER_KEY: "48BA4C65-E141-4E60-9C9F-6E1128706394"});
+        .addAll({API_KEY_HEADER_KEY: "GET_API_KEY"});
 
     print("[Request] url= ${options.baseUrl}${options.path},\n "
         "headers= ${options.headers},\n "
